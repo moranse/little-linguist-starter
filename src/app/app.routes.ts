@@ -9,12 +9,12 @@ import { MixedLettersComponent } from './mixed-letters/mixed-letters.component';
 
 
 export const routes: Routes = [
-    {path: "", component: CategoriesListComponent},
+    {path: "categorieslist", component: CategoriesListComponent},
     {path: "category/:id", component: CategoryFormComponent},
     {path: "newcategory", component: CategoryFormComponent},
-    {path: "dashbord", component: DashbordComponent},
+    {path: "", component: DashbordComponent},
     {path: "help", component: HelperComponent},
     {path: "choosegame", component: ChooseGameComponent},
-    {path: "wordSorter", component: WordSorterComponent},
-    {path: "mixedLetters", component: MixedLettersComponent}
+    {path: "wordSorter/:category", component: WordSorterComponent},
+    {path: "mixedLetters/:category", component: MixedLettersComponent}
 ];
