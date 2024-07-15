@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component,Input, numberAttribute } from '@angular/core';
 
 @Component({
   selector: 'app-mixed-letters',
@@ -8,5 +8,6 @@ import { Component } from '@angular/core';
   styleUrl: './mixed-letters.component.css'
 })
 export class MixedLettersComponent {
+  @Input({alias:'id', transform: numberAttribute })category:any;
 
 }

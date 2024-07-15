@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Input,numberAttribute} from '@angular/core';
 
 @Component({
   selector: 'app-word-sorter',
@@ -8,5 +8,5 @@ import { Component } from '@angular/core';
   styleUrl: './word-sorter.component.css'
 })
 export class WordSorterComponent {
-
+@Input({alias:'id', transform: numberAttribute })category:any;
 }
