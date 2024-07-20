@@ -2,11 +2,11 @@
     <button mat-icon-button [matMenuTriggerFor]="menu">
         <mat-icon>menu</mat-icon>
     </button>
-    <div routerLink="">Little Linguist</div>
+    <div class="pointer" routerLink="">Little Linguist</div>
     <span class="example-spacer"></span>
-    <mat-icon>perm_identity</mat-icon>
+    <mat-icon class="pointer" routerLink="categorieslist">perm_identity</mat-icon>
 </mat-toolbar>
 <mat-menu #menu="matMenu">
-  <button mat-menu-item routerLink="categorieslist">Admin</button>
+  <button mat-menu-item routerLink="categorieslist">Admin</button> <!--הוספתי ניתוב של לחצן האיש לעמוד קטגוריות-->
   <button mat-menu-item routerLink="choosegame">Let's Play</button>
-</mat-menu>
+</mat-menu> 
