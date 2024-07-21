@@ -9,4 +9,5 @@ import { Component, Input,numberAttribute} from '@angular/core';
 })
 export class WordSorterComponent {
 @Input({alias:'id', transform: numberAttribute })category:any;
+
 }

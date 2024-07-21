@@ -6,6 +6,7 @@ import { HelperComponent } from './helper/helper.component';
 import { ChooseGameComponent } from './choose-game/choose-game.component';
 import { WordSorterComponent } from './word-sorter/word-sorter.component';
 import { MixedLettersComponent } from './mixed-letters/mixed-letters.component';
+import { TriviaComponent } from './trivia/trivia.component';
 
 
 export const routes: Routes = [
@@ -16,5 +17,6 @@ export const routes: Routes = [
     {path: "help", component: HelperComponent},
     {path: "choosegame", component: ChooseGameComponent},
     {path: "wordSorter/:category", component: WordSorterComponent},
-    {path: "mixedLetters/:category", component: MixedLettersComponent}
+    {path: "mixedLetters/:category", component: MixedLettersComponent},
+    {path: "trivia/:category", component: TriviaComponent}
 ];
