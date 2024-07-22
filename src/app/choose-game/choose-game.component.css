@@ -1,7 +1,6 @@
 .container{
     display: flex;
     justify-content: center;
-    
 }
 .game{
     border: 1px solid;
@@ -11,6 +10,7 @@
     text-align: center;
     float: left;
     border-radius: 30px;
+    padding: 30px;
 }
 h1{
     text-align: center;
