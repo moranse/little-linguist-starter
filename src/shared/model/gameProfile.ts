@@ -2,12 +2,12 @@ export class GameProfile{
     id: number;
     name:string;
     details:string;
-    url:URL;
+    gameURL:string;
 
-    constructor(id:number,name:string,details:string,url:URL){
+    constructor(id:number,name:string,details:string,gameURL:string){
         this.id=id;
         this.name=name;
         this.details=details;
-        this.url=url;
+        this.gameURL=gameURL;
     }
 }

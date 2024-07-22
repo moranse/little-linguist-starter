@@ -1,1 +1,7 @@
-<p>choose-game works!</p>
+<div class="container">
+    <mat-card appearance="outlined" class="game" *ngFor="let game of allGames">
+        <mat-card-title>{{game?.name}}</mat-card-title>
+        <mat-card-content>{{game?.details}}
+        </mat-card-content>
+      </mat-card>
+      </div>
