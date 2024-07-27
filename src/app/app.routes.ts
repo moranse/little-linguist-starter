@@ -17,6 +17,6 @@ export const routes: Routes = [
     {path: "help", component: HelperComponent},
     {path: "choosegame", component: ChooseGameComponent},
     {path: "wordsorter/:id", component: WordSorterComponent},
-    {path: "mixedletters/:id", component: MixedLettersComponent},
+    {path: "mixed/:id", component: MixedLettersComponent},
     {path: "trivia/:id", component: TriviaComponent}
 ];

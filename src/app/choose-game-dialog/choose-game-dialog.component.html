@@ -1,0 +1,15 @@
+<p>choose-game-dialog works!</p>
+<div mat-dialog-content>
+    Choose category to play in game {{ allCategories}}
+</div>
+<div mat-dialog-actions>
+    <button 
+        cdkFocusInitial 
+        color="primary"
+        mat-button 
+        [mat-dialog-close]="true">OK</button>
+    <button 
+        color="primary"
+        mat-button 
+        [mat-dialog-close]="false">Cancel</button>
+</div>
