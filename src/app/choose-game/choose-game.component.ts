@@ -25,7 +25,6 @@ export class ChooseGameComponent implements OnInit {
   allGames: GameProfile[] = [];
   allCategories: Category[] = [];
   dialogService: any;
-  //categoriesService: any;
   category: any;
 
   constructor(private gamesService: GamesService,private categoriesService: CategoriesService) { }
@@ -38,12 +37,11 @@ export class ChooseGameComponent implements OnInit {
   chooseCategory(game:GameProfile) {
     console.log("game: "+game.name+" categories: "+this.allCategories);
 
-    //debugger;
-    //let dialogRef = this.dialogService.open(ChooseGameDialogComponent, { data: name });
-    let dialogRef = this.dialog.open(ChooseGameDialogComponent, {
+      this.dialog.open(ChooseGameDialogComponent, {
       data:{allCategories: this.allCategories},
-      height: '400px',
-      width: '600px',
+      height: '330px',
+      width: '270px',
     });
+    
   }
 }
