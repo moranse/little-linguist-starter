@@ -1,15 +1,18 @@
-<p>choose-game-dialog works!</p>
 <div mat-dialog-content>
-    Choose category to play in game {{ allCategories}}
+    <h5>Choose category to play in game:</h5>
+    <mat-form-field>
+        <mat-label></mat-label>
+        <mat-select [(value)]="selected">
+            <mat-option *ngFor="let category of this.allCategories" [value]="category.id">{{category.name}}</mat-option>
+        </mat-select>
+    </mat-form-field>
+    <h5>Number of words in category: {{getCategoryByID(selected)?.words?.length}}</h5>
+    <h5>Last update: {{getCategoryByID2(selected)}}</h5>
+
 </div>
-<div mat-dialog-actions>
-    <button 
-        cdkFocusInitial 
-        color="primary"
-        mat-button 
-        [mat-dialog-close]="true">OK</button>
-    <button 
-        color="primary"
-        mat-button 
-        [mat-dialog-close]="false">Cancel</button>
+
+<!-- <div mat-dialog-actions>
+    <button cdkFocusInitial color="primary" mat-button [mat-dialog-close]="true">OK</button>
+    <button color="primary" mat-button [mat-dialog-close]="false">Cancel</button>
 </div>
+-->

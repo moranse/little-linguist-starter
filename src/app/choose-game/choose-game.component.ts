@@ -1,6 +1,6 @@
 import { CategoriesService } from './../services/categories.service';
 import { GamesService } from './../services/games.service';
-import { Component, ChangeDetectionStrategy, OnInit } from '@angular/core';
+import { Component, ChangeDetectionStrategy, OnInit, inject } from '@angular/core';
 import { MatCardModule } from '@angular/material/card';
 import { GameProfile } from '../../shared/model/gameProfile';
 import { CommonModule } from '@angular/common';
@@ -8,8 +8,9 @@ import { ChooseGameDialogComponent } from '../choose-game-dialog/choose-game-dia
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { RouterModule } from '@angular/router';
-import { MatDialog } from '@angular/material/dialog';
 import { Category } from '../../shared/model/category';
+import { MatDialog, MatDialogActions,  MatDialogClose,  MatDialogContent,  MatDialogRef,  MatDialogTitle,} from '@angular/material/dialog';
+
 
 @Component({
   selector: 'app-choose-game',
@@ -20,27 +21,29 @@ import { Category } from '../../shared/model/category';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ChooseGameComponent implements OnInit {
-
+  readonly dialog = inject(MatDialog);
   allGames: GameProfile[] = [];
   allCategories: Category[] = [];
   dialogService: any;
   //categoriesService: any;
   category: any;
 
-  constructor(private gamesService: GamesService, private dialog: MatDialog, private categoriesService: CategoriesService) { }
+  constructor(private gamesService: GamesService,private categoriesService: CategoriesService) { }
 
   ngOnInit(): void {
     this.allGames = this.gamesService.list();
     this.allCategories=this.categoriesService.list();
   }
 
-  chooseCategory(allCategories: number, name: string) {
-    let dialogRef = this.dialogService.open(ChooseGameDialogComponent, { data: name });
+  chooseCategory(game:GameProfile) {
+    console.log("game: "+game.name+" categories: "+this.allCategories);
 
-    dialogRef.afterClosed().subscribe((result: Category[]) => {
-      if (result) {
-        //this.categoriesService = this.categoriesService.list();
-      }
+    //debugger;
+    //let dialogRef = this.dialogService.open(ChooseGameDialogComponent, { data: name });
+    let dialogRef = this.dialog.open(ChooseGameDialogComponent, {
+      data:{allCategories: this.allCategories},
+      height: '400px',
+      width: '600px',
     });
   }
 }
