@@ -43,9 +43,9 @@ export class ChooseGameDialogComponent implements OnInit {
   }
   getCategoryByID2(ID: number): string {//formated the category date
     let formattedDate = "";
-    let something = this.allCategories.find(item => item.id === ID);
-    if (something != undefined) {
-      formattedDate = formatDate(something.lastUpdateDate, 'yyyy-MM-dd', 'en-US');
+    let formated = this.allCategories.find(item => item.id === ID);
+    if (formated != undefined) {
+      formattedDate = formatDate(formated.lastUpdateDate, 'yyyy-MM-dd', 'en-US');
     }
     return formattedDate;
   }
