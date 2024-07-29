@@ -25,5 +25,5 @@ button:hover {
 
 button[disabled] {
   background-color: #ccc; /* Gray out the button when disabled */
-  cursor: default; /* Remove hover effect when disabled */
+  cursor: none; /* Remove hover effect when disabled */
 }

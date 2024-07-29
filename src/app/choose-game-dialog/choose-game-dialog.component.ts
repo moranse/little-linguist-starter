@@ -28,14 +28,16 @@ import { GameProfile } from '../../shared/model/gameProfile';
 export class ChooseGameDialogComponent implements OnInit {
   selected: number = 99;
   allCategories: Category[] = [];
-  // choosenGame:GameProfile[]= [];//for moving the game id
-  constructor(public dialogRef: MatDialogRef<ChooseGameDialogComponent>, @Inject(MAT_DIALOG_DATA) public data: any) {
+
+  constructor(public dialogRef: MatDialogRef<ChooseGameDialogComponent>, @Inject(MAT_DIALOG_DATA) public data: any) {//the type is any because geting 2 types - category and game profile
     this.allCategories = data.allCategories;
   }
 
   ngOnInit(): void {
     console.log(this.allCategories);
   }
+
+  
 
   getCategoryByID(ID: number): Category | undefined {//formated the category id to category name
     let cate = this.allCategories.find(item => item.id === ID);
