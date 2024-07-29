@@ -8,7 +8,7 @@
     </mat-form-field>
     <h5>Number of words in category: {{getCategoryByID(selected)?.words?.length}}</h5>
     <h5>Last update: {{getCategoryByID2(selected)}}</h5>
-    <button mat-raised-button color="primary" [routerLink]="['/trivia', selected]" [disabled]="!selected" (click)="closeDialog()">PLAY</button>
+    <button mat-raised-button color="primary" [disabled]="!selected" (click)="closeDialog()">PLAY</button>
 </div>
-<!--.צריך להשלים שהכפתור לא יהיה לחיץ אם לא נבחר קטגוריה
+<!--.
 הפניה לעמוד המשחק לא עובדת כרגע, פונה תמיד לאותו עמו. צריך לשים בפרמטר את השמזהה משחק-->

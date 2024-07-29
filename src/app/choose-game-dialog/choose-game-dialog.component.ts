@@ -51,6 +51,6 @@ export class ChooseGameDialogComponent implements OnInit {
   }
 
   closeDialog() {
-      this.dialogRef.close();
+      this.dialogRef.close(this.selected);
     }
 }
