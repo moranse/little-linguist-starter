@@ -45,8 +45,10 @@ export class ChooseGameComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe(selectedCategory => {
       console.log('The dialog was closed: ' + selectedCategory + " game id:  "+game.id);
-      selectedCategory;
+      if(selectedCategory!=99){selectedCategory;
         this.router.navigate(['/'+game.gameURL, selectedCategory]);
+      }
+      
     });
   }
   
