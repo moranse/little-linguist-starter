@@ -7,12 +7,10 @@
     font-size: 80px;
 }
 
-
 button {
   width: 210px;
   height: 50px;
   border-radius: 6px;
-  background-color: #3f51b5;
   color: white;
   font-size: 16px;
   font-weight: bold;
@@ -24,6 +22,6 @@ button:hover {
 }
 
 button[disabled] {
-  background-color: #ccc; /* Gray out the button when disabled */
-  cursor: none; /* Remove hover effect when disabled */
+  background-color: #ccc;
+  cursor: none;
 }

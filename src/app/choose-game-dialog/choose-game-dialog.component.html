@@ -6,7 +6,7 @@
             <mat-option *ngFor="let category of this.allCategories" [value]="category.id">{{category.name}}</mat-option>
         </mat-select>
     </mat-form-field>
-    <h5 *ngIf="selected<99">Number of words in category: {{getCategoryByID(selected)?.words?.length}}</h5>
-    <h5 *ngIf="selected<99">Last update: {{getCategoryByID2(selected)}}</h5>
-    <button mat-raised-button color="primary" *ngIf="selected<99" [disabled]="!selected" (click)="closeDialog()">PLAY</button>
+    <h5 *ngIf="selected<9999">Number of words in category: {{getCategoryByID(selected)?.words?.length}}</h5>
+    <h5 *ngIf="selected<9999">Last update: {{getCategoryByID2(selected)}}</h5>
+    <button mat-raised-button color="primary" [disabled]="selected==9999" (click)="closeDialog()">PLAY</button>
 </div>
