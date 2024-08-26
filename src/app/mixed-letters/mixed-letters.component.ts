@@ -44,6 +44,9 @@ export class MixedLettersComponent implements OnInit {
   badAnswer = 0;
   summery: number[] = [];//array of the users anser and category id
   wordStatus: number[] = [];//array of the word status if user anser correct or not
+points=0;//how many points for each good answer
+coins=0;//the number of coins the user got
+
   constructor(private gamesService: GamesService, private categoriesService: CategoriesService, private dialogService: MatDialog, private router: Router) {
   }
 
@@ -83,6 +86,7 @@ export class MixedLettersComponent implements OnInit {
 
   nextStage() { //all i check befor moving to next stage
     if (this.currentCategory?.words.length != undefined) {//for handeling the undefined use case
+      this.points=Math.floor(100/this.currentCategory.words.length);//how many points for each good answer
       if (this.usersAnser.toUpperCase() == this.currentCategory.words[this.index].origin.toUpperCase()) {
         this.textOfSuccessOrFail = 'Great Job!';
         this.textOfButton = 'CONTINUE';
@@ -91,6 +95,7 @@ export class MixedLettersComponent implements OnInit {
         console.log("corect answer - add to summery");
         this.goodAnswer++;
         this.wordStatus.push(1);//represant corect answer
+        this.coins=this.coins+this.points;//cakculate the number of points
       } else {
         this.textOfSuccessOrFail = 'incorect, give it another try! I belive in you!';
         this.textOfButton = 'Got it';
