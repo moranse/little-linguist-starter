@@ -1,12 +1,18 @@
 <h1>Let's Play</h1>
 <div class="container">
   <div>
-    <mat-card appearance="outlined" class="game" *ngFor="let game of allGames" mat-icon-button (click)="chooseCategory(game)">
+    <mat-card
+      appearance="outlined"
+      class="game"
+      *ngFor="let game of allGames"
+      mat-icon-button
+      (click)="chooseCategory(game)"
+    >
       <mat-card-title>
-        {{game?.name}}
+        {{ game?.name }}
       </mat-card-title>
       <mat-card-content>
-        {{game?.details}}
+        {{ game?.details }}
       </mat-card-content>
     </mat-card>
   </div>

@@ -1,10 +1,10 @@
 :host {
-    display: block;
-  }
+  display: block;
+}
 
-  h1{
-    text-align: center;
-    font-size: 80px;
+h1 {
+  text-align: center;
+  font-size: 80px;
 }
 
 button {
@@ -14,11 +14,11 @@ button {
   color: white;
   font-size: 16px;
   font-weight: bold;
-  border: none; 
-  cursor: pointer; 
+  border: none;
+  cursor: pointer;
 }
 button:hover {
-  background-color: #303f9f; 
+  background-color: #303f9f;
 }
 
 button[disabled] {

@@ -1,12 +1,25 @@
 <div mat-dialog-content>
-    <h5>Choose category to play in game:</h5>
-    <mat-form-field>
-        <mat-label></mat-label>
-        <mat-select [(value)]="selected">
-            <mat-option *ngFor="let category of this.allCategories" [value]="category.id">{{category.name}}</mat-option>
-        </mat-select>
-    </mat-form-field>
-    <h5 *ngIf="selected<9999">Number of words in category: {{getCategoryByID(selected)?.words?.length}}</h5>
-    <h5 *ngIf="selected<9999">Last update: {{getCategoryByID2(selected)}}</h5>
-    <button mat-raised-button color="primary" [disabled]="selected===9999" (click)="closeDialog()">PLAY</button>
+  <h5>Choose category to play in game:</h5>
+  <mat-form-field>
+    <mat-label></mat-label>
+    <mat-select [(value)]="selected">
+      <mat-option
+        *ngFor="let category of this.allCategories"
+        [value]="category.id"
+        >{{ category.name }}</mat-option
+      >
+    </mat-select>
+  </mat-form-field>
+  <h5 *ngIf="selected < 9999">
+    Number of words in category: {{ getCategoryByID(selected)?.words?.length }}
+  </h5>
+  <h5 *ngIf="selected < 9999">Last update: {{ getCategoryByID2(selected) }}</h5>
+  <button
+    mat-raised-button
+    color="primary"
+    [disabled]="selected === 9999"
+    (click)="closeDialog()"
+  >
+    PLAY
+  </button>
 </div>

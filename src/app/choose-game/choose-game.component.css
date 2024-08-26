@@ -1,19 +1,19 @@
-.container{
-    display: flex;
-    justify-content: center;
+.container {
+  display: flex;
+  justify-content: center;
 }
-.game{
-    border: 1px solid;
-    margin: 15px;
-    width: 250px;
-    height: 180px;
-    text-align: center;
-    float: left;
-    border-radius: 30px;
-    padding: 30px;
-    cursor: pointer;
+.game {
+  border: 1px solid;
+  margin: 15px;
+  width: 250px;
+  height: 180px;
+  text-align: center;
+  float: left;
+  border-radius: 30px;
+  padding: 30px;
+  cursor: pointer;
 }
-h1{
-    text-align: center;
-    font-size: 80px;
+h1 {
+  text-align: center;
+  font-size: 80px;
 }
