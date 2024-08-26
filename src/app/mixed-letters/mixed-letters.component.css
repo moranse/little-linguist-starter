@@ -6,16 +6,17 @@
 .game {
   border: 1px solid;
   margin: 15px;
-  width: 780px;
-  height: 470px;
   text-align: center;
   float: left;
   border-radius: 30px;
+  border-width: calc(100% - 50px); /*for making the borded dynamic*/
 }
 
 h1 {
   text-align: center;
   font-size: 60px;
+  margin-bottom: 0px;
+  margin-top: 15px;
 }
 
 .button {
@@ -97,4 +98,15 @@ h1 {
   color: white;
   border-radius: 6px;
   margin: auto;
+}
+
+.coins-container {
+  display: flex;
+  align-items: center;
+  gap: 5px; /* Add spacing between the icon and text */
+  direction: rtl;
+  border: none;
+  font-size: 12px; /* Adjust the font size as needed */
+  margin-bottom: 10px; /* Add a small margin to separate from the card */
+  margin-right: 40px;
 }

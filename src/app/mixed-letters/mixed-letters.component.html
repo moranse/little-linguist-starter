@@ -3,32 +3,45 @@
     <button class="exit" (click)="exitGame()">
       <mat-icon>exit_to_app</mat-icon>
     </button>
-    <h1> Mixed letters - {{currentCategory?.name}} </h1>
-    <mat-card>
-      <mat-card-content>{{coins}}</mat-card-content>
-    </mat-card>
+    <h1>Mixed letters - {{ currentCategory?.name }}</h1>
+      <div class="coins-container">
+         <span>{{coins}}</span>
+          <mat-icon mat-icon-color="primary">attach_money</mat-icon>
+      </div>
     <div>
       <div class="textstyle">
-        hebrew word: {{getOrigenWord()}} <br><br>
-        mixed english word: {{getCurrentStageShuffeldWord()}}<br><br>
+        hebrew word: {{ getOrigenWord() }} <br /><br />
+        mixed english word: {{ getCurrentStageShuffeldWord() }}<br /><br />
         <div class="input">
-          Guess:<input type="text" [(ngModel)]="usersAnser"><br><br>
+          Guess:<input type="text" [(ngModel)]="usersAnser" /><br /><br />
         </div>
       </div>
       <div class="buttonPlace">
-        <button class="button" mat-icon-button (click)="resetInput()">Reset</button>
-        <button class="button" mat-icon-button [disabled]="doUserAnser()" (click)="nextStage()">submit</button>
+        <button class="button" mat-icon-button (click)="resetInput()">
+          Reset
+        </button>
+        <button
+          class="button"
+          mat-icon-button
+          [disabled]="doUserAnser()"
+          (click)="nextStage()"
+        >
+          submit
+        </button>
       </div>
       <div class="progressBarStyle">
         <div class="progress-info">
           <mat-card class="icon-left">
-            <mat-card-content>{{startPlace}}</mat-card-content>
+            <mat-card-content>{{ startPlace }}</mat-card-content>
           </mat-card>
         </div>
-        <mat-progress-bar mode="determinate" value={{progressValue}}></mat-progress-bar>
+        <mat-progress-bar
+          mode="determinate"
+          value="{{ progressValue }}"
+        ></mat-progress-bar>
         <div class="progress-info">
           <mat-card class="icon-right">
-            <mat-card-content>{{endPlace}}</mat-card-content>
+            <mat-card-content>{{ endPlace }}</mat-card-content>
           </mat-card>
         </div>
       </div>
