@@ -52,7 +52,7 @@ export class MixedLettersComponent implements OnInit {
     this.currentCategory = this.categoriesService.get(parseInt(this.id));
     if (this.currentCategory != undefined) {
       this.summery.push(parseInt(this.id));
-      let stepValue = 100 / this.currentCategory.words.length;
+      const stepValue = 100 / this.currentCategory.words.length;
       this.progressValue = stepValue;
       this.endPlace = this.currentCategory?.words.length;
     }
@@ -100,7 +100,7 @@ export class MixedLettersComponent implements OnInit {
         this.badAnswer++;
         this.wordStatus.push(0);//represant rong answer
       }
-      let stepValue = 100 / this.currentCategory?.words.length
+      const stepValue = 100 / this.currentCategory?.words.length
       this.progressValue += stepValue;
       this.index++;
       this.howManyWordsLeft();
@@ -134,7 +134,7 @@ export class MixedLettersComponent implements OnInit {
   }
 
   exitGame() {//for closing dialog
-    let dialogRef = this.dialogService.open(ExitGameDialogComponent);
+    const dialogRef = this.dialogService.open(ExitGameDialogComponent);
 
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
@@ -144,7 +144,7 @@ export class MixedLettersComponent implements OnInit {
   }
 
   SuccessOrFailDialog() {
-    let dialogRef = this.dialogService.open(SuccessOrFailDialogComponent, { data: this.anser });
+    const dialogRef = this.dialogService.open(SuccessOrFailDialogComponent, { data: this.anser });
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
         console.log("show the success or failer to the user")
@@ -155,7 +155,7 @@ export class MixedLettersComponent implements OnInit {
   howManyWordsLeft() {//calculate number of words im category
     if (this.currentCategory?.words.length != undefined) {//for handeling the undefined use case
       this.startPlace = this.index + 1;
-      this.endPlace = this.currentCategory.words.length - this.index - 1;
+      this.endPlace = this.currentCategory.words.length;
     }
   }
 

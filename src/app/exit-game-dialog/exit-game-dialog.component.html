@@ -1,7 +1,12 @@
-<p mat-dialog-content>
-    Do you want to exit game?{{anser}}
-</p>
+<p mat-dialog-content>Do you want to exit game?{{ anser }}</p>
 <div mat-dialog-actions>
-    <button color="primary" mat-button [routerLink]="['/choosegame']" [mat-dialog-close]="true">Yes</button>
-    <button color="primary" mat-button [mat-dialog-close]="false">No</button>
+  <button
+    color="primary"
+    mat-button
+    [routerLink]="['/choosegame']"
+    [mat-dialog-close]="true"
+  >
+    Yes
+  </button>
+  <button color="primary" mat-button [mat-dialog-close]="false">No</button>
 </div>

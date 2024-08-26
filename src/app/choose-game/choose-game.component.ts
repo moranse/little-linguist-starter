@@ -37,7 +37,7 @@ export class ChooseGameComponent implements OnInit {
   chooseCategory(game:GameProfile) {
     console.log("game: "+game.name+" categories: "+this.allCategories);
 
-      let dialogRef = this.dialog?.open(ChooseGameDialogComponent, {
+      const dialogRef = this.dialog?.open(ChooseGameDialogComponent, {
       data:{allCategories: this.allCategories},
       height: '330px',
       width: '300px',
