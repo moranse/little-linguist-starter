@@ -1,10 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { MatTable } from '@angular/material/table';
-import { GamesService } from '../services/games.service';
 import { CategoriesService } from '../services/categories.service';
 import { Router, RouterModule } from '@angular/router';
 import { Category } from '../../shared/model/category';
-import { GameProfile } from '../../shared/model/gameProfile';
 import { ActivatedRoute } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { MatButtonModule } from '@angular/material/button';
@@ -48,7 +45,12 @@ export class GameSummeryComponent implements OnInit {
       console.log(this.currentCategory);
       if (this.currentCategory != undefined) {
         this.points = Math.floor(this.grade / (this.currentCategory?.words.length));//how many points for each good answer
-        this.grade = this.points * this.goodAnswer;
+        if(!this.wordStatusArray.includes(0)){
+          this.grade; 
+          console.log(this.grade);
+        }else{
+          this.grade = this.points * this.goodAnswer;
+        }
       }
     });
   }
