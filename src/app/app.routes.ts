@@ -7,6 +7,7 @@ import { ChooseGameComponent } from './choose-game/choose-game.component';
 import { WordSorterComponent } from './word-sorter/word-sorter.component';
 import { MixedLettersComponent } from './mixed-letters/mixed-letters.component';
 import { TriviaComponent } from './trivia/trivia.component';
+import { GameSummeryComponent } from './game-summery/game-summery.component';
 
 
 export const routes: Routes = [
@@ -18,5 +19,6 @@ export const routes: Routes = [
     {path: "choosegame", component: ChooseGameComponent},
     {path: "wordsorter/:id", component: WordSorterComponent},
     {path: "mixed/:id", component: MixedLettersComponent},
-    {path: "trivia/:id", component: TriviaComponent}
+    {path: "trivia/:id", component: TriviaComponent},
+    {path: "summery/:id" , component: GameSummeryComponent},
 ];
