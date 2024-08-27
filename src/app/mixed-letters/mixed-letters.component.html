@@ -20,11 +20,11 @@
               [(ngModel)]="usersAnser"
               name="origin-{{ usersAnser }}"
               required
-              pattern="^[a-zA-Z]+$"
+              pattern='/^[a-zA-Z]*?$/' 
               #originField="ngModel"
             />
-            <mat-error *ngIf="!originField.invalid">
-              <!--changing color of input tored if not English letters only-->
+            <mat-error *ngIf="originField.invalid===null || originField.invalid===true">
+              Use English letters only
             </mat-error>
           </mat-form-field>
         </div>
