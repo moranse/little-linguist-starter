@@ -1,4 +1,3 @@
-import { TranslatedWord } from './../../shared/model/translated-word';
 import { SuccessOrFailDialogComponent } from './../success-or-fail-dialog/success-or-fail-dialog.component';
 import { CategoriesService } from './../services/categories.service';
 import {
