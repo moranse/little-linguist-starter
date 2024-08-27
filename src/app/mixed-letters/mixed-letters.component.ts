@@ -98,7 +98,7 @@ export class MixedLettersComponent implements OnInit {
   shuffleWord() {
     //get shuffeled word and do preperetion for next word after click
     if (this.currentCategory != undefined) {
-      this.nextStage(); //calles the next word stage, for all the preperation nedded
+      // this.nextStage(); //calles the next word stage, for all the preperation nedded
       const characters =
         this.currentCategory.words[this.index].origin.split('');
       this.sw = characters
@@ -158,6 +158,8 @@ export class MixedLettersComponent implements OnInit {
         console.log(this.summery);
         this.summery.push(this.badAnswer); //add the finael rezultes of the users answer to summery arry
         this.routToSummery();
+      }else{
+        this.shuffleWord();
       }
     }
   }
