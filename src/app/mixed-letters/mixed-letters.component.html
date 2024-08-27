@@ -20,7 +20,7 @@
               [(ngModel)]="usersAnser"
               name="origin-{{ usersAnser }}"
               required
-              pattern='/^[a-zA-Z]*?$/' 
+              pattern='^[a-zA-Z]*?$' 
               #originField="ngModel"
             />
             <mat-error *ngIf="originField.invalid===null || originField.invalid===true">
