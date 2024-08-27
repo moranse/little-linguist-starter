@@ -105,7 +105,7 @@ export class MixedLettersComponent implements OnInit {
         ?.sort(() => Math.random() - 0.5)
         .join('')
         .toUpperCase();
-      if (this.sw === this.currentCategory.words[this.index].origin) {
+      if (this.sw === this.currentCategory.words[this.index].origin.toUpperCase()) {
         //for not geting the order of the corect word after shuffled
         this.sw = this.shuffleWord().toUpperCase();
       }
