@@ -10,8 +10,8 @@
     </div>
     <div>
       <div class="textstyle">
-        hebrew word: {{ getOrigenWord() }} <br /><br />
-        mixed english word: {{ getCurrentStageShuffeldWord() }}<br /><br />
+        Hebrew word: {{ getOrigenWord() }} <br /><br />
+        Mixed English word: {{ sw }}<br /><br />
         <div class="input">
           Guess:<input type="text" [(ngModel)]="usersAnser" /><br /><br />
         </div>
@@ -24,7 +24,7 @@
           class="button"
           mat-icon-button
           [disabled]="doUserAnser()"
-          (click)="nextStage()"
+          (click)="shuffleWord()"
         >
           submit
         </button>

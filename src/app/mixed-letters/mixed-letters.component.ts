@@ -1,3 +1,4 @@
+import { TranslatedWord } from './../../shared/model/translated-word';
 import { SuccessOrFailDialogComponent } from './../success-or-fail-dialog/success-or-fail-dialog.component';
 import { CategoriesService } from './../services/categories.service';
 import {
@@ -60,6 +61,7 @@ export class MixedLettersComponent implements OnInit {
   wordStatus: number[] = []; //array of the word status if user anser correct or not
   points = 0; //how many points for each good answer
   coins = 0; //the number of coins the user got
+  sw = '';
 
   constructor(
     private gamesService: GamesService,
@@ -76,28 +78,39 @@ export class MixedLettersComponent implements OnInit {
       const stepValue = 100 / this.currentCategory.words.length;
       this.progressValue = stepValue;
       this.endPlace = this.currentCategory?.words.length;
-    }
-  }
-
-  getCurrentStageShuffeldWord() {
-    //shuffeling the word
-    if (this.currentCategory == undefined) {
-      return '';
-    }
-    return this.shuffleWord(
-      this.currentCategory.words[this.index].origin
-    ).toUpperCase();
-  }
-
-  shuffleWord(inputValue?: string) {
-    if (inputValue != undefined) {
-      const characters = inputValue.split('');
-      let sw = characters?.sort(() => Math.random() - 0.5).join('');
-      if (sw === inputValue) {
-        //for not geting the corect word after shuffled
-        sw = this.shuffleWord(inputValue);
+      this.sw = this.currentCategory.words[this.index].origin //for the first word need to show for user
+        .split('')
+        .sort(() => Math.random() - 0.5)
+        .join('')
+        .toUpperCase();
+      if (
+        this.sw === this.currentCategory.words[this.index].origin.toUpperCase()
+      ) {
+        //for not geting the order of the corect word after shuffled
+        this.sw = this.currentCategory.words[this.index].origin
+          .split('')
+          .sort(() => Math.random() - 0.5)
+          .join('')
+          .toUpperCase();
       }
-      return sw;
+    }
+  }
+
+  shuffleWord() {
+    //get shuffeled word and do preperetion for next word after click
+    if (this.currentCategory != undefined) {
+      this.nextStage(); //calles the next word stage, for all the preperation nedded
+      const characters =
+        this.currentCategory.words[this.index].origin.split('');
+      this.sw = characters
+        ?.sort(() => Math.random() - 0.5)
+        .join('')
+        .toUpperCase();
+      if (this.sw === this.currentCategory.words[this.index].origin) {
+        //for not geting the order of the corect word after shuffled
+        this.sw = this.shuffleWord().toUpperCase();
+      }
+      return this.sw;
     }
     return '';
   }
