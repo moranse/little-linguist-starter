@@ -13,7 +13,7 @@
   <h5 *ngIf="selected < 9999">
     Number of words in category: {{ getCategoryByID(selected)?.words?.length }}
   </h5>
-  <h5 *ngIf="selected < 9999">Last update: {{ getCategoryByID2(selected) }}</h5>
+  <h5 *ngIf="selected < 9999">Last update: {{ getDateForCategory(selected) }}</h5>
   <button
     mat-raised-button
     color="primary"

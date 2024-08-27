@@ -68,7 +68,7 @@ export class ChooseGameDialogComponent implements OnInit {
     const cate = this.allCategories.find((item) => item.id === ID);
     return cate;
   }
-  getCategoryByID2(ID: number): string {
+  getDateForCategory(ID: number): string {
     //formated the category date
     let formattedDate = '';
     const formated = this.allCategories.find((item) => item.id === ID);
