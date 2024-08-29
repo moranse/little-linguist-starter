@@ -26,4 +26,4 @@ placesCategory.words.push(new TranslatedWord("town", "עיר"));
 placesCategory.words.push(new TranslatedWord("hotel", "מלון"));
 placesCategory.words.push(new TranslatedWord("hospital", "בית חולים"));
 
-export var categories = [animalsCategory, peopleCategory, placesCategory];
+export const categories = []//[animalsCategory, peopleCategory, placesCategory];

@@ -1,18 +1,109 @@
-.container{
+.container {
     display: flex;
     justify-content: center;
-    
-}
-.game{
+  }
+  
+  .game {
     border: 1px solid;
     margin: 15px;
-    width: 250px;
-    height: 180px;
     text-align: center;
     float: left;
     border-radius: 30px;
-}
-h1{
+    border-width: calc(100% - 50px); /*for making the borded dynamic*/
+  }
+  
+  h1 {
     text-align: center;
-    font-size: 80px;
-}
+    font-size: 60px;
+    margin-bottom: 0px;
+    margin-top: 15px;
+  }
+  
+  .button {
+    width: 210px;
+    height: 50px;
+    border-radius: 6px;
+    color: white;
+    background-color: #303f9f;
+    font-size: 16px;
+    font-weight: bold;
+    border: none;
+    cursor: pointer;
+    margin: 5px;
+  }
+  
+  .button:hover {
+    background-color: #303f9f;
+  }
+  
+  .button[disabled] {
+    background-color: #ccc;
+    cursor: none;
+  }
+  
+  .exit {
+    cursor: pointer;
+    background-color: #303f9f;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    float: left;
+    margin-left: 20px;
+    margin-top: 20px;
+  }
+  
+  .textstyle {
+    margin-left: 20px;
+    text-align: left;
+    font-size: 20px;
+  }
+  
+  .buttonPlace {
+    margin-top: 15px;
+  }
+  
+  .progressBarStyle {
+    display: flex;
+    align-items: center;
+    width: 740px;
+    margin: 15px;
+  }
+  
+  .progress-info {
+    display: flex;
+    align-items: center;
+  }
+  
+  .icon-left {
+    flex: auto 0 0;
+  }
+  
+  .icon-right {
+    flex: auto 0 0;
+  }
+  
+  .icon-left,
+  .icon-right {
+    border: 1px solid #303f9f;
+    width: 40px;
+    height: 40px;
+    font-size: 15px;
+    margin: 0 10px;
+    font-weight: bold;
+    background-color: #303f9f;
+    color: white;
+    border-radius: 6px;
+    margin: auto;
+  }
+  
+  .coins-container {
+    display: flex;
+    align-items: center;
+    gap: 5px; /* Add spacing between the icon and text */
+    direction: rtl;
+    border: none;
+    font-size: 18px;
+    margin-bottom: 10px;
+    margin-right: 40px;
+  }
+  
