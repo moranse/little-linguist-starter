@@ -1,3 +1,4 @@
+import { TranslatedWord } from './../../shared/model/translated-word';
 import { SuccessOrFailDialogComponent } from './../success-or-fail-dialog/success-or-fail-dialog.component';
 import { CategoriesService } from './../services/categories.service';
 import {
@@ -60,7 +61,11 @@ export class MixedLettersComponent implements OnInit {
   wordStatus: number[] = []; //array of the word status if user anser correct or not
   points = 0; //how many points for each good answer
   coins = 0; //the number of coins the user got
-  sw = '';
+  sw = ''; //the word that shuffeld
+  randomWordArray: TranslatedWord[] = []; //for keeping the new order of words that random
+  randomOrigenWord = ''; //for keeping the random origen word from category
+  randomTargetWord = ''; //for keeping the random target word from category
+  randomNumber = -1;
 
   constructor(
     private gamesService: GamesService,
@@ -77,6 +82,7 @@ export class MixedLettersComponent implements OnInit {
       const stepValue = 100 / this.currentCategory.words.length;
       this.progressValue = stepValue;
       this.endPlace = this.currentCategory?.words.length;
+      this.randomArray();
       this.sw = this.currentCategory.words[this.index].origin //for the first word need to show for user
         .split('')
         .sort(() => Math.random() - 0.5)
@@ -94,18 +100,43 @@ export class MixedLettersComponent implements OnInit {
       }
     }
   }
-
+  randomArray() {
+    //randow new order of word array in every new game
+    if (this.currentCategory != undefined) {
+      while (this.randomWordArray.length < this.currentCategory.words.length) {
+        this.randomNumber = Math.floor(
+          Math.random() * this.currentCategory.words.length
+        );
+        this.randomOrigenWord =
+          this.currentCategory.words[this.randomNumber].origin;
+        this.randomTargetWord =
+          this.currentCategory.words[this.randomNumber].target;
+        const existingWord = this.randomWordArray.find(
+          (word) =>
+            word.origin === this.randomOrigenWord &&
+            word.target === this.randomTargetWord
+        );
+        if (!existingWord) {
+          this.randomWordArray.push(
+            new TranslatedWord(this.randomOrigenWord, this.randomTargetWord)
+          );
+        }
+      }
+      this.currentCategory.words = this.randomWordArray;
+    }
+  }
   shuffleWord() {
     //get shuffeled word and do preperetion for next word after click
     if (this.currentCategory != undefined) {
-      // this.nextStage(); //calles the next word stage, for all the preperation nedded
       const characters =
         this.currentCategory.words[this.index].origin.split('');
       this.sw = characters
         ?.sort(() => Math.random() - 0.5)
         .join('')
         .toUpperCase();
-      if (this.sw === this.currentCategory.words[this.index].origin.toUpperCase()) {
+      if (
+        this.sw === this.currentCategory.words[this.index].origin.toUpperCase()
+      ) {
         //for not geting the order of the corect word after shuffled
         this.sw = this.shuffleWord().toUpperCase();
       }
@@ -158,7 +189,7 @@ export class MixedLettersComponent implements OnInit {
         console.log(this.summery);
         this.summery.push(this.badAnswer); //add the finael rezultes of the users answer to summery arry
         this.routToSummery();
-      }else{
+      } else {
         this.shuffleWord();
       }
     }
@@ -223,6 +254,7 @@ export class MixedLettersComponent implements OnInit {
       queryParams: {
         summery: encodeURIComponent(JSON.stringify(this.summery)),
         wordStatus: encodeURIComponent(JSON.stringify(this.wordStatus)),
+        wordsNewArray: encodeURIComponent(JSON.stringify(this.currentCategory?.words)),
       },
     });
   }
