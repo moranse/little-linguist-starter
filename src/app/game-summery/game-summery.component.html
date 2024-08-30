@@ -1,7 +1,7 @@
 <div class="game">
     <h1> Mixed letters - {{currentCategory?.name}} - Results </h1>
     <p>Grade: {{getGrade()}}</p>
-    <p>You translated {{goodAnswer}} out of {{currentCategory?.words?.length}} words correctly</p>
+    <p>You translated {{goodAnswer}} out of {{wordStatusArray.length}} words correctly</p>
     <table>
         <tbody>
             <tr *ngFor="let statuse of wordStatusArray; let i=index">

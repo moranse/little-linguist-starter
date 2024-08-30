@@ -11,7 +11,7 @@ import { TranslatedWord } from '../../shared/model/translated-word';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatDialog } from '@angular/material/dialog';
-import { RouterModule } from '@angular/router';
+import { Router, RouterModule } from '@angular/router';
 import { ExitGameDialogComponent } from '../exit-game-dialog/exit-game-dialog.component';
 import { CommonModule } from '@angular/common';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
@@ -67,7 +67,8 @@ export class WordSorterComponent implements OnInit {
 
   constructor(
     private categoriesService: CategoriesService,
-    private dialogService: MatDialog
+    private dialogService: MatDialog,
+    private router: Router,
   ) {}
 
   ngOnInit(): void {
@@ -123,6 +124,16 @@ export class WordSorterComponent implements OnInit {
       }
     }
   }
+
+  howManyWordsLeft() {
+    //calculate number of words im category
+    if (this.randomWordArray.length != undefined) {
+      //for handeling the undefined use case
+      this.startPlace = this.index+1;
+      this.endPlace = this.randomWordArray.length;
+    }
+  }
+
   checkIfInCategory() {
     if (this.currentCategory?.words != undefined) {
       const existingWord = this.currentCategory.words.findIndex(
@@ -188,8 +199,15 @@ export class WordSorterComponent implements OnInit {
     this.startPlace++;
     const stepValue = 100 / this.combArray.length;
     this.progressValue += stepValue;
-
+    this.howManyWordsLeft();
     console.log(this.wordToShow);
+    if (this.startPlace == this.randomWordArray.length) {
+      console.log('after finishing all words');
+      this.summery.push(this.goodAnswer); //add the finael rezultes of the users answer to summery arry
+      console.log(this.summery);
+      this.summery.push(this.badAnswer); //add the finael rezultes of the users answer to summery arry
+      this.routToSummery();
+    }
   }
 
   SuccessOrFailDialog() {
@@ -213,4 +231,16 @@ export class WordSorterComponent implements OnInit {
       }
     });
   }
+
+  routToSummery() {
+    console.log(this.summery);
+    this.router.navigate(['summery/' + this.summery[0]], {
+      queryParams: {
+        summery: encodeURIComponent(JSON.stringify(this.summery)),
+        wordStatus: encodeURIComponent(JSON.stringify(this.wordStatus)),
+        wordsNewArray: encodeURIComponent(JSON.stringify(this.randomWordArray)),
+      },
+    });
+  }
+
 }
