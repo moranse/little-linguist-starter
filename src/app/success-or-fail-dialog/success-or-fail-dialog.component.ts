@@ -15,6 +15,7 @@ import {
 import { MatInputModule } from '@angular/material/input';
 import { RouterModule } from '@angular/router';
 import { MixedLettersComponent } from '../mixed-letters/mixed-letters.component';
+import { WordSorterComponent } from '../word-sorter/word-sorter.component';
 
 @Component({
   selector: 'app-success-or-fail-dialog',
@@ -27,7 +28,7 @@ import { MixedLettersComponent } from '../mixed-letters/mixed-letters.component'
     MatInputModule,
     CommonModule,
     RouterModule,
-    MixedLettersComponent,
+    MixedLettersComponent,WordSorterComponent,
   ],
   templateUrl: './success-or-fail-dialog.component.html',
   styleUrl: './success-or-fail-dialog.component.css',

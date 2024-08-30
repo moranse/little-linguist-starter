@@ -10,16 +10,14 @@
     </div>
     <div>
       <div class="textstyle">
-        Is word <b>(להכניס כאן מילה)</b> part of the 
+        Is word <b>{{wordToShow}}</b> part of the 
        <b> {{ currentCategory?.name }}</b> category?<br><br>
-        <!--להכניס כאן מילה רנדומלית-->
       </div>
       <div class="buttonPlace">
-        <button class="button" mat-icon-button>Yes-notWorking</button> 
-        <button class="button" mat-icon-button>No-notWorking</button>
+        <button class="button" mat-icon-button (click)="checkIfInCategory()">Yes</button> 
+        <button class="button" mat-icon-button (click)="checkIfNotInCategory()">No</button>
       </div>
     </div>
-
     <div class="progressBarStyle">
       <div class="progress-info">
         <mat-card class="icon-left">
@@ -38,6 +36,3 @@
     </div>
   </div>
 </div>
-
-<button (click)="randomCategory()">run func</button>
-<p>{{ this.randomCatego?.name }}</p>
