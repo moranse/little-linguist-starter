@@ -77,9 +77,7 @@ export class WordSorterComponent implements OnInit {
         this.randomCategory(); //get random category from category list
         this.randomArray(); //combin the 2 categorys and random words inside
         this.wordToShow = this.randomWordArray[this.index].origin;
-
         this.summery.push(parseInt(this.id));
-
         const stepValue = 100 / this.combArray.length;
         this.progressValue = stepValue;
         this.endPlace = this.combArray.length;
@@ -157,7 +155,8 @@ export class WordSorterComponent implements OnInit {
     if (this.currentCategory?.words != undefined) {
       const existingWord = this.currentCategory.words.findIndex(
         (word) => word.origin === this.randomWordArray[this.index].origin
-      );console.log("rando word: "+this.randomWordArray[this.index].origin+' index is: '+existingWord);
+      );
+      console.log("rando word: "+this.randomWordArray[this.index].origin+' index is: '+existingWord);
       if (existingWord===-1) {
         this.textOfSuccessOrFail = 'Great Job!';
         this.textOfButton = 'CONTINUE';
@@ -183,6 +182,7 @@ export class WordSorterComponent implements OnInit {
 
   getNextWordToPlay() {
     //for showing the next word
+    this.points = Math.floor(100 / this.randomWordArray.length); //how many points for each good answer
     this.index++;
     this.wordToShow = this.randomWordArray[this.index].origin;
     this.startPlace++;
