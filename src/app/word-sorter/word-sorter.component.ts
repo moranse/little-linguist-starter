@@ -64,19 +64,24 @@ export class WordSorterComponent implements OnInit {
   randomTargetWord = ''; //for keeping the random target word from category
   randomNumber = -1;
   wordToShow = '';
-  shortCatego: TranslatedWord[] = [];//shorter the array to 3 words
+  shortCatego: TranslatedWord[] = []; //shorter the array to 3 words
   shortRandomCateg: TranslatedWord[] = []; //shorter the array to 3 words
 
   constructor(
     private categoriesService: CategoriesService,
     private dialogService: MatDialog,
-    private router: Router,
+    private router: Router
   ) {}
 
   ngOnInit(): void {
     if (this.id != undefined) {
       this.currentCategory = this.categoriesService.get(parseInt(this.id)); //get the chosen category
       if (this.currentCategory?.words != undefined) {
+        if (this.currentCategory.words.length < 3) {
+          console.log(
+            'this category have less the 3 words, if i add time i would open dialog to informe the user'
+          );
+        }
         this.randomCategory(); //get random category from category list
         this.randomArray(); //combin the 2 categorys and random words inside
         this.wordToShow = this.randomWordArray[this.index].origin;
@@ -85,7 +90,6 @@ export class WordSorterComponent implements OnInit {
         this.progressValue = stepValue;
         // this.endPlace = this.combArray.length;
         this.endPlace = this.randomWordArray.length;
-
       }
     }
   }
@@ -98,18 +102,18 @@ export class WordSorterComponent implements OnInit {
     console.log(
       'the random category is: ' + this.categoriesService.get(this.number)?.name
     );
-    if (this.id != undefined && this.randomCatego!=undefined) {
+    if (this.id != undefined && this.randomCatego != undefined) {
       console.log('not undefined');
-      if(this.randomCatego?.words.length<3){//for not getting categorys withe less then 3 words
+      if (this.randomCatego?.words.length < 3) {
+        //for not getting categorys withe less then 3 words
         this.randomCategory();
-      }      
+      }
       if (this.number === parseInt(this.id)) {
         // Check if the chosen random category is the same as the current one
         console.log('generate random category agen');
         this.randomCategory();
       }
     }
-
   }
 
   randomArray() {
@@ -118,31 +122,27 @@ export class WordSorterComponent implements OnInit {
       this.currentCategory?.words != undefined &&
       this.randomCatego?.words != undefined
     ) {
-      this.shortCatego=this.currentCategory.words;
-      for (let i = this.shortCatego.length-1; i > 0; i--) {
+      this.shortCatego = this.currentCategory.words;
+      for (let i = this.shortCatego.length - 1; i > 0; i--) {
         const j = Math.floor(Math.random() * (i + 1));
         [this.shortCatego[i], this.shortCatego[j]] = [
           this.shortCatego[j],
           this.shortCatego[i],
         ];
       }
-      this.shortCatego=this.shortCatego.slice(0,3);
-      this.shortRandomCateg=this.randomCatego.words;
-      for (let i = this.shortRandomCateg.length-1; i > 0; i--) {
+      this.shortCatego = this.shortCatego.slice(0, 3);
+      this.shortRandomCateg = this.randomCatego.words;
+      for (let i = this.shortRandomCateg.length - 1; i > 0; i--) {
         const j = Math.floor(Math.random() * (i + 1));
         [this.shortRandomCateg[i], this.shortRandomCateg[j]] = [
           this.shortRandomCateg[j],
           this.shortRandomCateg[i],
         ];
       }
-      this.shortRandomCateg=this.shortRandomCateg.slice(0,3);
-      this.combArray.push(...this.shortCatego,...this.shortRandomCateg);
-      // this.combArray.push(
-      //   ...this.currentCategory.words,
-      //   ...this.randomCatego.words
-      // );
+      this.shortRandomCateg = this.shortRandomCateg.slice(0, 3);
+      this.combArray.push(...this.shortCatego, ...this.shortRandomCateg);
       this.randomWordArray = [...this.combArray];
-      for (let i = this.randomWordArray.length-1; i > 0; i--) {
+      for (let i = this.randomWordArray.length - 1; i > 0; i--) {
         const j = Math.floor(Math.random() * (i + 1));
         [this.randomWordArray[i], this.randomWordArray[j]] = [
           this.randomWordArray[j],
@@ -156,7 +156,7 @@ export class WordSorterComponent implements OnInit {
     //calculate number of words im category
     if (this.randomWordArray.length != undefined) {
       //for handeling the undefined use case
-      
+
       if (this.startPlace == this.randomWordArray.length) {
         console.log('after finishing all words');
         this.summery.push(this.goodAnswer); //add the finael rezultes of the users answer to summery arry
@@ -172,8 +172,8 @@ export class WordSorterComponent implements OnInit {
       const existingWord = this.currentCategory.words.findIndex(
         (word) => word.origin === this.randomWordArray[this.index].origin
       );
-      console.log("rando word: "+this.randomWordArray[this.index].origin);
-      if (existingWord>-1) {
+      console.log('rando word: ' + this.randomWordArray[this.index].origin);
+      if (existingWord > -1) {
         this.textOfSuccessOrFail = 'Great Job!';
         this.textOfButton = 'CONTINUE';
         this.anser = [this.textOfSuccessOrFail, this.textOfButton];
@@ -201,8 +201,8 @@ export class WordSorterComponent implements OnInit {
       const existingWord = this.currentCategory.words.findIndex(
         (word) => word.origin === this.randomWordArray[this.index].origin
       );
-      console.log("rando word: "+this.randomWordArray[this.index].origin);
-      if (existingWord===-1) {
+      console.log('rando word: ' + this.randomWordArray[this.index].origin);
+      if (existingWord === -1) {
         this.textOfSuccessOrFail = 'Great Job!';
         this.textOfButton = 'CONTINUE';
         this.anser = [this.textOfSuccessOrFail, this.textOfButton];
@@ -228,23 +228,14 @@ export class WordSorterComponent implements OnInit {
   getNextWordToPlay() {
     //for showing the next word
     this.points = Math.floor(100 / this.randomWordArray.length); //how many points for each good answer
+    this.isItLastWord();
     this.index++;
     this.wordToShow = this.randomWordArray[this.index].origin;
     this.startPlace++;
     const stepValue = 100 / this.combArray.length;
     this.progressValue += stepValue;
-    // this.endPlace = this.randomWordArray.length;
-    this.isItLastWord();
     console.log(this.wordToShow);
-    this.startPlace = this.index+1;
-
-    // if (this.startPlace == this.randomWordArray.length) {
-    //   console.log('after finishing all words');
-    //   this.summery.push(this.goodAnswer); //add the finael rezultes of the users answer to summery arry
-    //   console.log(this.summery);
-    //   this.summery.push(this.badAnswer); //add the finael rezultes of the users answer to summery arry
-    //   this.routToSummery();
-    // }
+    this.startPlace = this.index + 1;
   }
 
   SuccessOrFailDialog() {
@@ -279,5 +270,4 @@ export class WordSorterComponent implements OnInit {
       },
     });
   }
-
 }
