@@ -30,6 +30,7 @@ export class DashbordComponent implements OnInit {
   gameMinAvg = '';
   playedCategorys = 0;
   notPlayedCateory = 0;
+  percentOfPerfectScore=0;
 
   constructor(
     private gameResultService: gameResultService,
@@ -42,7 +43,12 @@ export class DashbordComponent implements OnInit {
       if (result !== undefined) {
         this.allGameResult = result;
         console.log(this.allGameResult);
+        let sumOfPerfectGame=0;
+
         for (let x = 0; x < this.allGameResult.length; x++) {
+          if(this.allGameResult[x].pointsNumber===100){
+            sumOfPerfectGame++;
+          }
           this.numberOfPoints += this.allGameResult[x].pointsNumber;
           if (Number(this.allGameResult[x].gameID) === 3) {
             //for sorting game word sorter
@@ -55,7 +61,9 @@ export class DashbordComponent implements OnInit {
             //for sorting game Trivia - not in use yet
             this.gameTriva.push(this.allGameResult[x]);
           }
-        }
+        }         
+        this.percentOfPerfectScore=(sumOfPerfectGame/this.allGameResult.length)*100;
+
         this.numberOfgamesPlayed = this.allGameResult.length;
         for (let x = 0; x < this.gameSorter.length; x++) {
           this.sumSorter += this.gameSorter[x].pointsNumber;
@@ -109,5 +117,6 @@ export class DashbordComponent implements OnInit {
     console.log(
       'the number of categorys that have NOT played: ' + this.notPlayedCateory
     );
+    console.log('percents of games with perfect score: '+this.percentOfPerfectScore);
   }
 }
