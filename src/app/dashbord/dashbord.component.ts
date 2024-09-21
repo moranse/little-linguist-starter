@@ -75,8 +75,8 @@ export class DashbordComponent implements OnInit {
           if (result !== undefined) {
             this.allCategory = result;
             for (let x = 0; x < this.allCategory.length; x++) {
+              this.played = 0;
               for (let y = 0; y < this.allGameResult.length; y++) {
-                this.played = 0;
                 if (
                   this.allGameResult[y].categoryID.indexOf(
                     this.allCategory[x].id
@@ -90,8 +90,8 @@ export class DashbordComponent implements OnInit {
               }
               this.notPlayedCateory =
                 this.allCategory.length - this.playedCategorys;
-              this.loadingDashbored();
             }
+            this.loadingDashbored();
           }
         });
       }
