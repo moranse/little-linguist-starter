@@ -57,3 +57,7 @@ td {
   color: white;
   background-color: #303f9f;
 }
+.custom-spinner {
+  color: blue;
+  margin: 20px auto;
+}

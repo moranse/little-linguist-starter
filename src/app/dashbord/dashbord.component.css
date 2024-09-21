@@ -16,6 +16,10 @@ h1{
     text-align: center;
     font-size: 80px;
 }
+.custom-spinner {
+    color: blue;
+    margin: 20px auto;
+  }
 .custom-content {
     position: relative;
   border: 1px solid;

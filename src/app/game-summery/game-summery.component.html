@@ -1,5 +1,5 @@
 <div *ngIf="!isFullyLoaded">
-  <mat-spinner></mat-spinner>
+  <mat-spinner class="custom-spinner"></mat-spinner>
 </div>
 <div class="game" *ngIf="isFullyLoaded">
   <h1>Mixed letters - {{ currentCategory?.name }} - Results</h1>
