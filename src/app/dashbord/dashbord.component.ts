@@ -16,7 +16,7 @@ import { Category } from '../../shared/model/category';
 export class DashbordComponent implements OnInit {
   allGames: GameProfile[] = [];
   allGameResult: gameResult[] = [];
-  allCategory:Category[]=[];
+  allCategory: Category[] = [];
   numberOfPoints: number = 0;
   numberOfgamesPlayed: number = 0;
   gameMixed: gameResult[] = [];
@@ -28,6 +28,9 @@ export class DashbordComponent implements OnInit {
   avgSorter = 0;
   gameMaxAvg = '';
   gameMinAvg = '';
+  playedCategorys = 0;
+  notPlayedCateory = 0;
+  played = 0;
 
   constructor(
     private gameResultService: gameResultService,
@@ -47,7 +50,8 @@ export class DashbordComponent implements OnInit {
           } else if (Number(this.allGameResult[x].gameID) === 2) {
             //for sorting game mixed letters
             this.gameMixed.push(this.allGameResult[x]);
-          } else {//for sorting game Trivia - not in use yet
+          } else {
+            //for sorting game Trivia - not in use yet
             this.gameTriva.push(this.allGameResult[x]);
           }
         }
@@ -68,26 +72,43 @@ export class DashbordComponent implements OnInit {
           this.gameMinAvg = 'Mixed Letters Game';
         }
         this.CategoriesService.list().then((result: Category[] | undefined) => {
-          if(result!==undefined){
-            this.allCategory=result;
-
+          if (result !== undefined) {
+            this.allCategory = result;
+            for (let x = 0; x < this.allCategory.length; x++) {
+              for (let y = 0; y < this.allGameResult.length; y++) {
+                this.played = 0;
+                if (
+                  this.allGameResult[y].categoryID.indexOf(
+                    this.allCategory[x].id
+                  )
+                ) {
+                  this.played++;
+                }
+              }
+              if (this.played > 0) {
+                this.playedCategorys++;
+              }
+              this.notPlayedCateory =
+                this.allCategory.length - this.playedCategorys;
+              this.loadingDashbored();
+            }
           }
-        })
-
-
-
-
-
-        console.log('number of points in all games: ' + this.numberOfPoints);
-        console.log('number of games played: ' + this.numberOfgamesPlayed);
-        console.log('the AVG of sorter game: ' + this.avgSorter);
-        console.log('the AVG of Mixed game: ' + this.avgMixed);
-        console.log('the game with max AVG:  ' + this.gameMaxAvg);
-        console.log('the game with min AVG:  ' + this.gameMinAvg);
-
-
-
+        });
       }
     });
+  }
+  loadingDashbored() {
+    console.log('number of points in all games: ' + this.numberOfPoints);
+    console.log('number of games played: ' + this.numberOfgamesPlayed);
+    console.log('the AVG of sorter game: ' + this.avgSorter);
+    console.log('the AVG of Mixed game: ' + this.avgMixed);
+    console.log('the game with max AVG:  ' + this.gameMaxAvg);
+    console.log('the game with min AVG:  ' + this.gameMinAvg);
+    console.log(
+      'the number of categorys that have played: ' + this.playedCategorys
+    );
+    console.log(
+      'the number of categorys that have NOT played: ' + this.notPlayedCateory
+    );
   }
 }
