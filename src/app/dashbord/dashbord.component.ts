@@ -30,14 +30,14 @@ export class DashbordComponent implements OnInit {
   gameMinAvg = '';
   playedCategorys = 0;
   notPlayedCateory = 0;
-  played = 0;
 
   constructor(
     private gameResultService: gameResultService,
-    private CategoriesService: CategoriesService
+    private CategoriesService: CategoriesService, private GamesService: GamesService,
   ) {}
 
   ngOnInit(): void {
+    this.allGames=this.GamesService.list();
     this.gameResultService.list().then((result: gameResult[] | undefined) => {
       if (result !== undefined) {
         this.allGameResult = result;
@@ -47,6 +47,7 @@ export class DashbordComponent implements OnInit {
           if (Number(this.allGameResult[x].gameID) === 3) {
             //for sorting game word sorter
             this.gameSorter.push(this.allGameResult[x]);
+            this.allGames[this.allGameResult[x].gameID].gamesPlayed.push()
           } else if (Number(this.allGameResult[x].gameID) === 2) {
             //for sorting game mixed letters
             this.gameMixed.push(this.allGameResult[x]);
@@ -75,15 +76,15 @@ export class DashbordComponent implements OnInit {
           if (result !== undefined) {
             this.allCategory = result;
             for (let x = 0; x < this.allCategory.length; x++) {
-              this.played = 0;
+              let played = 0;
               for (let y = 0; y < this.allGameResult.length; y++) {
                 if (
                   this.allGameResult[y].categoryID === this.allCategory[x].id
                 ) {
-                  this.played++;
+                  played++;
                 }
               }
-              if (this.played > 0) {
+              if (played > 0) {
                 this.playedCategorys++;
               }
             }
