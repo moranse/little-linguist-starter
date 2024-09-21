@@ -4,19 +4,18 @@
 </div>
 <div *ngIf="isFullyLoaded">
   <mat-card class="custom-content" appearance="outlined">
-    <mat-card-content
-      >Number of points in all games:{{ this.numberOfPoints }}</mat-card-content
-    >
+    <mat-card-title>{{ this.numberOfPoints }}</mat-card-title>
+    <mat-card-subtitle>Points</mat-card-subtitle>
   </mat-card>
   <mat-card class="custom-content" appearance="outlined">
-    <mat-card-content
-      >number of games played: {{ this.numberOfgamesPlayed }}</mat-card-content
-    >
+    <mat-card-title>{{ this.numberOfgamesPlayed }}</mat-card-title>
+    <mat-card-subtitle> Games played</mat-card-subtitle>
   </mat-card>
   <mat-card class="custom-content" appearance="outlined">
-    <mat-card-content
+    <mat-card-title>{{ this.avgSorterGame }}</mat-card-title>
+    <mat-card-subtitle
       >The average of game Word Sorter:
-      {{ this.avgSorterGame }}</mat-card-content
+      </mat-card-subtitle>
     >
   </mat-card>
   <mat-card class="custom-content" appearance="outlined">
