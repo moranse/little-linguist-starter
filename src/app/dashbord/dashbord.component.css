@@ -17,7 +17,16 @@ h1{
     font-size: 80px;
 }
 .custom-content {
-    background-color: lightblue;
-    padding: 20px;
-    width: ;
+    position: relative;
+  border: 1px solid;
+  margin-left: 200px;
+  padding: 20px;
+  text-align: center;
+  float: left;
+  margin: 6px;
+  border-radius: 20px;
+  border-width: calc(100% - 50px); /*for making the borded dynamic*/
+  background-color: #303f9f;
+  color: white;
+  width: 170px;
   }
