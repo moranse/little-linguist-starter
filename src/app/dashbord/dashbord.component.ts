@@ -130,7 +130,8 @@ export class DashbordComponent implements OnInit {
       'the number of categorys that have NOT played: ' + this.notPlayedCateory
     );
     console.log('percents of games with perfect score: '+this.percentOfPerfectScore);
-    console.log('number of played each category: '+ this.categorysNumberOfPlayed);
+    console.log('category most  played: '+ this.categorysNumberOfPlayed);
     console.log('id of max category played: '+ this.allCategory.filter(category=>category.id===this.maxCategoryPlayedId)[0].name)
+    console.log("percents of categorys have learned: "+(this.playedCategorys/this.allCategory.length)*100)
   }
 }
