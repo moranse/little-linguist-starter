@@ -5,6 +5,7 @@ import { gameResult } from './../../shared/model/gameResult';
 import { Component, OnInit } from '@angular/core';
 import { GameProfile } from '../../shared/model/gameProfile';
 import { Category } from '../../shared/model/category';
+import { map } from 'rxjs';
 
 @Component({
   selector: 'app-dashbord',
@@ -31,6 +32,8 @@ export class DashbordComponent implements OnInit {
   playedCategorys = 0;
   notPlayedCateory = 0;
   percentOfPerfectScore=0;
+  categorysNumberOfPlayed: Map<string,number>=new Map<string,number>;
+  maxCategoryPlayedId='';
 
   constructor(
     private gameResultService: gameResultService,
@@ -92,6 +95,15 @@ export class DashbordComponent implements OnInit {
                   played++;
                 }
               }
+              this.categorysNumberOfPlayed.set(this.allCategory[x].id,played);
+              let maxCategoryPlayed = Number.MIN_SAFE_INTEGER;
+
+              for (const [key, value] of this.categorysNumberOfPlayed.entries()) {
+                if (value > maxCategoryPlayed) {
+                  maxCategoryPlayed = value;
+                  this.maxCategoryPlayedId=key;
+                }
+              }
               if (played > 0) {
                 this.playedCategorys++;
               }
@@ -118,5 +130,7 @@ export class DashbordComponent implements OnInit {
       'the number of categorys that have NOT played: ' + this.notPlayedCateory
     );
     console.log('percents of games with perfect score: '+this.percentOfPerfectScore);
+    console.log('number of played each category: '+ this.categorysNumberOfPlayed);
+    console.log('id of max category played: '+ this.allCategory.filter(category=>category.id===this.maxCategoryPlayedId)[0].name)
   }
 }
