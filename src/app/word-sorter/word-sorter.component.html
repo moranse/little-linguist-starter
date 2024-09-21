@@ -3,35 +3,48 @@
     <button class="exit" (click)="exitGame()">
       <mat-icon>exit_to_app</mat-icon>
     </button>
-    <h1>Word sorter - {{ currentCategory?.name }}</h1>
-    <div class="coins-container">
-      <span>{{ coins }}</span>
-      <mat-icon mat-icon-color="primary">attach_money</mat-icon>
+    <div *ngIf="!isFullyLoaded">
+      <mat-spinner></mat-spinner>
     </div>
-    <div>
-      <div class="textstyle">
-        Is word <b>{{wordToShow}}</b> part of the 
-       <b> {{ currentCategory?.name }}</b> category?<br><br>
+    <div *ngIf="isFullyLoaded">
+      <h1>Word sorter - {{ currentCategory?.name }}</h1>
+      <div class="coins-container">
+        <span>{{ coins }}</span>
+        <mat-icon mat-icon-color="primary">attach_money</mat-icon>
       </div>
-      <div class="buttonPlace">
-        <button class="button" mat-icon-button (click)="checkIfInCategory()">Yes</button> 
-        <button class="button" mat-icon-button (click)="checkIfNotInCategory()">No</button>
+      <div>
+        <div class="textstyle">
+          Is word <b>{{ wordToShow }}</b> part of the
+          <b> {{ currentCategory?.name }}</b> category?<br /><br />
+        </div>
+        <div class="buttonPlace">
+          <button class="button" mat-icon-button (click)="checkIfInCategory()">
+            Yes
+          </button>
+          <button
+            class="button"
+            mat-icon-button
+            (click)="checkIfNotInCategory()"
+          >
+            No
+          </button>
+        </div>
       </div>
-    </div>
-    <div class="progressBarStyle">
-      <div class="progress-info">
-        <mat-card class="icon-left">
-          <mat-card-content>{{ startPlace }}</mat-card-content>
-        </mat-card>
-      </div>
-      <mat-progress-bar
-        mode="determinate"
-        value="{{ progressValue }}"
-      ></mat-progress-bar>
-      <div class="progress-info">
-        <mat-card class="icon-right">
-          <mat-card-content>{{ endPlace }}</mat-card-content>
-        </mat-card>
+      <div class="progressBarStyle">
+        <div class="progress-info">
+          <mat-card class="icon-left">
+            <mat-card-content>{{ startPlace }}</mat-card-content>
+          </mat-card>
+        </div>
+        <mat-progress-bar
+          mode="determinate"
+          value="{{ progressValue }}"
+        ></mat-progress-bar>
+        <div class="progress-info">
+          <mat-card class="icon-right">
+            <mat-card-content>{{ endPlace }}</mat-card-content>
+          </mat-card>
+        </div>
       </div>
     </div>
   </div>

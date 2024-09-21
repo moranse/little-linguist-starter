@@ -1,15 +1,16 @@
 <div class="container">
-   <div class="game">
-      <button class="exit" (click)="exitGame()">
-         <mat-icon>exit_to_app</mat-icon>
-       </button>   
-   <h1> Trivia - {{currentCategory?.name}} </h1>
-   <p>This game is not ready yet.<br></p>
-   <p class="x"><b>We recommend you to check out our games:</b><br><br>
-      <b>1. primery game:</b> "mixed letters" <br>
+  <div class="game">
+    <button class="exit" (click)="exitGame()">
+      <mat-icon>exit_to_app</mat-icon>
+    </button>
+    <h1>Trivia - {{ currentCategory?.name }}</h1>
+    <p>This game is not ready yet.<br /></p>
+    <p class="x">
+      <b>We recommend you to check out our games:</b><br /><br />
+      <b>1. primery game:</b> "mixed letters" <br />
       2. "word sorter" game <span>( this game might have mistakes )</span>
-   </p>
-   <div class="progressBarStyle">
+    </p>
+    <div class="progressBarStyle">
       <div class="progress-info">
         <mat-card class="icon-left">
           <mat-card-content>{{ startPlace }}</mat-card-content>
@@ -25,5 +26,5 @@
         </mat-card>
       </div>
     </div>
-   </div>
+  </div>
 </div>

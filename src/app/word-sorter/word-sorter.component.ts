@@ -1,10 +1,5 @@
 import { Category } from '../../shared/model/category';
-import {
-  ChangeDetectionStrategy,
-  Component,
-  Input,
-  OnInit,
-} from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { MatCardModule } from '@angular/material/card';
 import { CategoriesService } from '../services/categories.service';
 import { TranslatedWord } from '../../shared/model/translated-word';
@@ -16,6 +11,7 @@ import { ExitGameDialogComponent } from '../exit-game-dialog/exit-game-dialog.co
 import { CommonModule } from '@angular/common';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { SuccessOrFailDialogComponent } from '../success-or-fail-dialog/success-or-fail-dialog.component';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
 @Component({
   selector: 'app-word-sorter',
@@ -30,10 +26,11 @@ import { SuccessOrFailDialogComponent } from '../success-or-fail-dialog/success-
     MatIconModule,
     MatButtonModule,
     MatProgressBarModule,
+    MatProgressSpinnerModule,
   ],
   templateUrl: './word-sorter.component.html',
   styleUrl: './word-sorter.component.css',
-  changeDetection: ChangeDetectionStrategy.OnPush,
+  //changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class WordSorterComponent implements OnInit {
   @Input() id?: string | undefined;
@@ -66,6 +63,7 @@ export class WordSorterComponent implements OnInit {
   wordToShow = '';
   shortCatego: TranslatedWord[] = []; //shorter the array to 3 words
   shortRandomCateg: TranslatedWord[] = []; //shorter the array to 3 words
+  isFullyLoaded = false;
 
   constructor(
     private categoriesService: CategoriesService,
@@ -75,43 +73,54 @@ export class WordSorterComponent implements OnInit {
 
   ngOnInit(): void {
     if (this.id != undefined) {
-      this.currentCategory = this.categoriesService.get(parseInt(this.id)); //get the chosen category
-      if (this.currentCategory?.words != undefined) {
-        if (this.currentCategory.words.length < 3) {
-          console.log(
-            'this category have less the 3 words, if i add time i would open dialog to informe the user'
-          );
-        }
-        this.randomCategory(); //get random category from category list
-        this.randomArray(); //combin the 2 categorys and random words inside
-        this.wordToShow = this.randomWordArray[this.index].origin;
-        this.summery.push(parseInt(this.id));
-        const stepValue = 100 / this.combArray.length;
-        this.progressValue = stepValue;
-        // this.endPlace = this.combArray.length;
-        this.endPlace = this.randomWordArray.length;
-      }
+      this.categoriesService
+        .get(this.id)
+        .then((result: Category | undefined) => {
+          this.currentCategory = result;
+          if (this.currentCategory?.words != undefined) {
+            if (this.currentCategory.words.length < 3) {
+              console.log(
+                'this category have less the 3 words, if i add time i would open dialog to informe the user'
+              );
+            }
+
+            this.categoriesService
+              .list()
+              .then((result: Category[] | undefined) => {
+                if (result != undefined) {
+                  this.randomCategory(result); //get random category from category list
+
+                  this.randomArray(); //combin the 2 categorys and random words inside
+                  this.wordToShow = this.randomWordArray[this.index].origin;
+                  // this.summery.push(this.id);
+                  const stepValue = 100 / this.combArray.length;
+                  this.progressValue = stepValue;
+                  // this.endPlace = this.combArray.length;
+                  this.endPlace = this.randomWordArray.length;
+                  this.isFullyLoaded = true;
+                }
+              });
+          }
+        }); //get the chosen category
     }
   }
 
-  randomCategory() {
+  randomCategory(result: Category[]) {
     //get random category from category list
-    const categoriesLength = this.categoriesService.list().length;
-    this.number = Math.floor(Math.random() * categoriesLength); // for getting random number within the range of category list
-    this.randomCatego = this.categoriesService.get(this.number);
-    console.log(
-      'the random category is: ' + this.categoriesService.get(this.number)?.name
-    );
+
+    const number = Math.floor(Math.random() * result.length); // for getting random number within the range of category list
+    this.randomCatego = result[number];
+    console.log('the random category is: ' + this.randomCatego.name);
     if (this.id != undefined && this.randomCatego != undefined) {
       console.log('not undefined');
       if (this.randomCatego?.words.length < 3) {
         //for not getting categorys withe less then 3 words
-        this.randomCategory();
+        this.randomCategory(result);
       }
-      if (this.number === parseInt(this.id)) {
+      if (this.randomCatego.id === this.id) {
         // Check if the chosen random category is the same as the current one
         console.log('generate random category agen');
-        this.randomCategory();
+        this.randomCategory(result);
       }
     }
   }
@@ -262,11 +271,12 @@ export class WordSorterComponent implements OnInit {
 
   routToSummery() {
     console.log(this.summery);
-    this.router.navigate(['summery/' + this.summery[0]], {
+    this.router.navigate(['summery/' + this.id], {
       queryParams: {
         summery: encodeURIComponent(JSON.stringify(this.summery)),
         wordStatus: encodeURIComponent(JSON.stringify(this.wordStatus)),
         wordsNewArray: encodeURIComponent(JSON.stringify(this.randomWordArray)),
+        gameID:3,
       },
     });
   }

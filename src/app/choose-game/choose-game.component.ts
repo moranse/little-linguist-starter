@@ -14,9 +14,8 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { Router, RouterModule } from '@angular/router';
 import { Category } from '../../shared/model/category';
-import {
-  MatDialog,
-} from '@angular/material/dialog';
+import { MatDialog } from '@angular/material/dialog';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
 @Component({
   selector: 'app-choose-game',
@@ -27,10 +26,11 @@ import {
     MatIconModule,
     MatButtonModule,
     RouterModule,
+    MatProgressSpinnerModule,
   ],
   templateUrl: './choose-game.component.html',
   styleUrl: './choose-game.component.css',
-  changeDetection: ChangeDetectionStrategy.OnPush,
+  //changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ChooseGameComponent implements OnInit {
   readonly dialog = inject(MatDialog);
@@ -38,16 +38,22 @@ export class ChooseGameComponent implements OnInit {
   allCategories: Category[] = [];
   dialogService: any;
   category: any;
+  isFullyLoaded: boolean = false;
 
   constructor(
     private gamesService: GamesService,
     private categoriesService: CategoriesService,
     private router: Router
-  ) {}
+  ) {
+    this.isFullyLoaded = false;
+  }
 
   ngOnInit(): void {
     this.allGames = this.gamesService.list();
-    this.allCategories = this.categoriesService.list();
+    this.categoriesService.list().then((result: Category[]) => {
+      this.allCategories = result;
+      this.isFullyLoaded = true;
+    });
   }
 
   chooseCategory(game: GameProfile) {
@@ -63,7 +69,7 @@ export class ChooseGameComponent implements OnInit {
       console.log(
         'The dialog was closed: ' + selectedCategory + ' game id:  ' + game.id
       );
-      if (selectedCategory != 99) {
+      if (selectedCategory != '') {
         selectedCategory;
         this.router.navigate(['/' + game.gameURL, selectedCategory]);
       }

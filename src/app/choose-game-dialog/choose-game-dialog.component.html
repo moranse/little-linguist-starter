@@ -10,14 +10,16 @@
       >
     </mat-select>
   </mat-form-field>
-  <h5 *ngIf="selected < 9999">
+  <h5 *ngIf="selected !== ''">
     Number of words in category: {{ getCategoryByID(selected)?.words?.length }}
   </h5>
-  <h5 *ngIf="selected < 9999">Last update: {{ getDateForCategory(selected) }}</h5>
+  <h5 *ngIf="selected !== ''">
+    Last update: {{ getDateForCategory(selected) }}
+  </h5>
   <button
     mat-raised-button
     color="primary"
-    [disabled]="selected === 9999"
+    [disabled]="selected === ''"
     (click)="closeDialog()"
   >
     PLAY

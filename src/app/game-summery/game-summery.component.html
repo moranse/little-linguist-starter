@@ -1,20 +1,28 @@
-<div class="game">
-    <h1> Mixed letters - {{currentCategory?.name}} - Results </h1>
-    <p>Grade: {{getGrade()}}</p>
-    <p>You translated {{goodAnswer}} out of {{wordStatusArray.length}} words correctly</p>
-    <table>
-        <tbody>
-            <tr *ngFor="let statuse of wordStatusArray; let i=index">
-                <td>Origin: {{wordsTarget(i)}}</td>
-                <td>Target: {{wordsOrigen(i)}}</td>
-                <td>
-                    <mat-icon *ngIf="statuse===1">done</mat-icon>
-                    <mat-icon *ngIf="statuse===0">close</mat-icon>
-                </td>
-            </tr>
-        </tbody>
-    </table>
-    <div mat-dialog-actions>
-        <button class="font" mat-button [routerLink]="['/choosegame']">New Game</button>
-    </div>
+<div *ngIf="!isFullyLoaded">
+  <mat-spinner></mat-spinner>
+</div>
+<div class="game" *ngIf="isFullyLoaded">
+  <h1>Mixed letters - {{ currentCategory?.name }} - Results</h1>
+  <p>Grade: {{ getGrade() }}</p>
+  <p>
+    You translated {{ goodAnswer }} out of {{ wordStatusArray.length }} words
+    correctly
+  </p>
+  <table>
+    <tbody>
+      <tr *ngFor="let statuse of wordStatusArray; let i = index">
+        <td>Origin: {{ wordsTarget(i) }}</td>
+        <td>Target: {{ wordsOrigen(i) }}</td>
+        <td>
+          <mat-icon *ngIf="statuse === 1">done</mat-icon>
+          <mat-icon *ngIf="statuse === 0">close</mat-icon>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+  <div mat-dialog-actions>
+    <button class="font" mat-button [routerLink]="['/choosegame']">
+      New Game
+    </button>
+  </div>
 </div>

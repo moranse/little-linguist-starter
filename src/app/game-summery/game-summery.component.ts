@@ -1,3 +1,5 @@
+import { gameResultService } from './../services/gameResult.service';
+import { gameResult } from './../../shared/model/gameResult';
 import { Component, Input, OnInit } from '@angular/core';
 import { CategoriesService } from '../services/categories.service';
 import { RouterModule } from '@angular/router';
@@ -8,6 +10,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatInputModule } from '@angular/material/input';
 import { MatIconModule } from '@angular/material/icon';
 import { TranslatedWord } from '../../shared/model/translated-word';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
 @Component({
   selector: 'app-game-summery',
@@ -19,35 +22,38 @@ import { TranslatedWord } from '../../shared/model/translated-word';
     CommonModule,
     RouterModule,
     MatIconModule,
+    MatProgressSpinnerModule,
   ],
   templateUrl: './game-summery.component.html',
   styleUrl: './game-summery.component.css',
 })
 export class GameSummeryComponent implements OnInit {
-  @Input() summery?: string;
+  @Input() id?: string;
   @Input() wordStatus?: string;
   summeryArray: number[] = [];
   wordStatusArray: number[] = [];
-  id = 0;
+  // id = '';
   goodAnswer = 0;
   badAnswer = 0;
   currentCategory?: Category;
   grade = 100;
   points = 0;
   randomWordArray: TranslatedWord[] = [];
+  isFullyLoaded = false;
+  gameID = -1;
 
   constructor(
     private categoriesService: CategoriesService,
+    private gameResultService: gameResultService,
     private route: ActivatedRoute
   ) {}
 
   ngOnInit(): void {
     this.route.queryParams.subscribe((params) => {
       this.summeryArray = JSON.parse(decodeURIComponent(params['summery']));
-      this.id = this.summeryArray[0];
-      this.goodAnswer = this.summeryArray[1];
-      this.badAnswer = this.summeryArray[2];
-
+      this.goodAnswer = this.summeryArray[0];
+      this.badAnswer = this.summeryArray[1];
+      this.gameID = params['gameID'];
       this.wordStatusArray = JSON.parse(
         decodeURIComponent(params['wordStatus'])
       );
@@ -62,17 +68,37 @@ export class GameSummeryComponent implements OnInit {
           ' nuber of bad answers: ' +
           this.badAnswer
       );
-      this.currentCategory = this.categoriesService.get(this.id);
-      console.log(
-        'for showing the category name to user, The category name is: ' +
-          this.currentCategory?.name
-      );
-      this.points = Math.floor(this.grade / this.randomWordArray.length); //how many points for each good answer
-      if (!this.wordStatusArray.includes(0)) {
-        this.grade;
-        console.log(this.grade);
-      } else {
-        this.grade = this.points * this.goodAnswer;
+
+      if (this.id != undefined) {
+        this.categoriesService
+          .get(this.id)
+          .then((result: Category | undefined) => {
+            if (this.id !== undefined) {
+              this.currentCategory = result;
+              console.log(
+                'for showing the category name to user, The category name is: ' +
+                  this.currentCategory?.name
+              );
+              this.points = Math.floor(
+                this.grade / this.randomWordArray.length
+              ); //how many points for each good answer
+              if (!this.wordStatusArray.includes(0)) {
+                this.grade;
+                console.log(this.grade);
+              } else {
+                this.grade = this.points * this.goodAnswer;
+              }
+              this.isFullyLoaded = true;
+              const gameResult_ = new gameResult(
+                '',
+                this.id,
+                this.gameID,
+                new Date(),
+                this.grade
+              );
+              this.gameResultService.add(gameResult_);
+            }
+          });
       }
     });
   }

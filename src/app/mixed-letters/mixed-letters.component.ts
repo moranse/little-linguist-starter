@@ -1,12 +1,7 @@
 import { TranslatedWord } from './../../shared/model/translated-word';
 import { SuccessOrFailDialogComponent } from './../success-or-fail-dialog/success-or-fail-dialog.component';
 import { CategoriesService } from './../services/categories.service';
-import {
-  ChangeDetectionStrategy,
-  Component,
-  Input,
-  OnInit,
-} from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { MatCardModule } from '@angular/material/card';
 import { GameProfile } from '../../shared/model/gameProfile';
 import { GamesService } from '../services/games.service';
@@ -22,6 +17,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatDialog } from '@angular/material/dialog';
 import { ExitGameDialogComponent } from '../exit-game-dialog/exit-game-dialog.component';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
 @Component({
   selector: 'app-mixed-letters',
@@ -37,13 +33,14 @@ import { MatProgressBarModule } from '@angular/material/progress-bar';
     MatIconModule,
     MatButtonModule,
     MatProgressBarModule,
+    MatProgressSpinnerModule,
   ],
   templateUrl: './mixed-letters.component.html',
   styleUrl: './mixed-letters.component.css',
-  changeDetection: ChangeDetectionStrategy.OnPush,
+  //changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class MixedLettersComponent implements OnInit {
-  @Input() id?: any; //GameProfile;
+  @Input() id?: string; //GameProfile;
   allGames: GameProfile[] = [];
   index = 0; //for showing the curent word
   progressValue = 0; //for incrimet the progrees value
@@ -66,6 +63,7 @@ export class MixedLettersComponent implements OnInit {
   randomOrigenWord = ''; //for keeping the random origen word from category
   randomTargetWord = ''; //for keeping the random target word from category
   randomNumber = -1;
+  isFullyLoaded = false;
 
   constructor(
     private gamesService: GamesService,
@@ -76,28 +74,35 @@ export class MixedLettersComponent implements OnInit {
 
   ngOnInit(): void {
     this.allGames = this.gamesService.list();
-    this.currentCategory = this.categoriesService.get(parseInt(this.id));
-    if (this.currentCategory != undefined) {
-      this.summery.push(parseInt(this.id));
-      const stepValue = 100 / this.currentCategory.words.length;
-      this.progressValue = stepValue;
-      this.endPlace = this.currentCategory?.words.length;
-      this.randomArray();
-      this.sw = this.currentCategory.words[this.index].origin //for the first word need to show for user
-        .split('')
-        .sort(() => Math.random() - 0.5)
-        .join('')
-        .toUpperCase();
-      if (
-        this.sw === this.currentCategory.words[this.index].origin.toUpperCase()
-      ) {
-        //for not geting the order of the corect word after shuffled
-        this.sw = this.currentCategory.words[this.index].origin
-          .split('')
-          .sort(() => Math.random() - 0.5)
-          .join('')
-          .toUpperCase();
-      }
+    if (this.id !== undefined) {
+      this.categoriesService
+        .get(this.id)
+        .then((result: Category | undefined) => {
+          this.currentCategory = result;
+          if (this.currentCategory != undefined) {
+            const stepValue = 100 / this.currentCategory.words.length;
+            this.progressValue = stepValue;
+            this.endPlace = this.currentCategory?.words.length;
+            this.randomArray();
+            this.sw = this.currentCategory.words[this.index].origin //for the first word need to show for user
+              .split('')
+              .sort(() => Math.random() - 0.5)
+              .join('')
+              .toUpperCase();
+            if (
+              this.sw ===
+              this.currentCategory.words[this.index].origin.toUpperCase()
+            ) {
+              //for not geting the order of the corect word after shuffled
+              this.sw = this.currentCategory.words[this.index].origin
+                .split('')
+                .sort(() => Math.random() - 0.5)
+                .join('')
+                .toUpperCase();
+            }
+          }
+          this.isFullyLoaded = true;
+        });
     }
   }
   randomArray() {
@@ -250,11 +255,14 @@ export class MixedLettersComponent implements OnInit {
 
   routToSummery() {
     console.log(this.summery);
-    this.router.navigate(['summery/' + this.summery[0]], {
+    this.router.navigate(['summery/' + this.id], {
       queryParams: {
         summery: encodeURIComponent(JSON.stringify(this.summery)),
         wordStatus: encodeURIComponent(JSON.stringify(this.wordStatus)),
-        wordsNewArray: encodeURIComponent(JSON.stringify(this.currentCategory?.words)),
+        wordsNewArray: encodeURIComponent(
+          JSON.stringify(this.currentCategory?.words)
+        ),
+        gameID:2,
       },
     });
   }

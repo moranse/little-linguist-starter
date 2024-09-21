@@ -48,7 +48,7 @@ import { WordSorterComponent } from '../word-sorter/word-sorter.component';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ChooseGameDialogComponent implements OnInit {
-  selected: number = 9999;
+  selected: string = '';
   allCategories: Category[] = [];
 
   constructor(
@@ -63,12 +63,12 @@ export class ChooseGameDialogComponent implements OnInit {
     console.log(this.allCategories);
   }
 
-  getCategoryByID(ID: number): Category | undefined {
+  getCategoryByID(ID: string): Category | undefined {
     //formated the category id to category name
     const cate = this.allCategories.find((item) => item.id === ID);
     return cate;
   }
-  getDateForCategory(ID: number): string {
+  getDateForCategory(ID: string): string {
     //formated the category date
     let formattedDate = '';
     const formated = this.allCategories.find((item) => item.id === ID);
