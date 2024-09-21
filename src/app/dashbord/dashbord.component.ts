@@ -5,12 +5,14 @@ import { gameResult } from './../../shared/model/gameResult';
 import { Component, OnInit } from '@angular/core';
 import { GameProfile } from '../../shared/model/gameProfile';
 import { Category } from '../../shared/model/category';
-import { map } from 'rxjs';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { CommonModule } from '@angular/common';
+
 
 @Component({
   selector: 'app-dashbord',
   standalone: true,
-  imports: [],
+  imports: [MatProgressSpinnerModule,CommonModule],
   templateUrl: './dashbord.component.html',
   styleUrl: './dashbord.component.css',
 })
@@ -23,10 +25,10 @@ export class DashbordComponent implements OnInit {
   gameMixed: gameResult[] = [];
   gameSorter: gameResult[] = [];
   gameTriva: gameResult[] = [];
-  sumMixed = 0;
-  avgMixed = 0;
-  sumSorter = 0;
-  avgSorter = 0;
+  sumMixedGame = 0;
+  avgMixedGame = 0;
+  sumSorterGame = 0;
+  avgSorterGame = 0;
   gameMaxAvg = '';
   gameMinAvg = '';
   playedCategorys = 0;
@@ -34,6 +36,9 @@ export class DashbordComponent implements OnInit {
   percentOfPerfectScore=0;
   categorysNumberOfPlayed: Map<string,number>=new Map<string,number>;
   maxCategoryPlayedId='';
+  maxCategoryPlayed='';
+  percentsCategorysLearned=0;
+  isFullyLoaded=false;
 
   constructor(
     private gameResultService: gameResultService,
@@ -69,14 +74,14 @@ export class DashbordComponent implements OnInit {
 
         this.numberOfgamesPlayed = this.allGameResult.length;
         for (let x = 0; x < this.gameSorter.length; x++) {
-          this.sumSorter += this.gameSorter[x].pointsNumber;
+          this.sumSorterGame += this.gameSorter[x].pointsNumber;
         }
-        this.avgSorter = this.sumSorter / this.gameSorter.length;
+        this.avgSorterGame = this.sumSorterGame / this.gameSorter.length;
         for (let x = 0; x < this.gameMixed.length; x++) {
-          this.sumMixed += this.gameMixed[x].pointsNumber;
+          this.sumMixedGame += this.gameMixed[x].pointsNumber;
         }
-        this.avgMixed = this.sumMixed / this.gameMixed.length;
-        if (this.avgMixed > this.avgSorter) {
+        this.avgMixedGame = this.sumMixedGame / this.gameMixed.length;
+        if (this.avgMixedGame > this.avgSorterGame) {
           this.gameMaxAvg = 'Mixed Letters Game';
           this.gameMinAvg = 'Word Sorter Game';
         } else {
@@ -114,13 +119,14 @@ export class DashbordComponent implements OnInit {
           }
         });
       }
+      this.isFullyLoaded=true;
     });
   }
   loadingDashbored() {
     console.log('number of points in all games: ' + this.numberOfPoints);
     console.log('number of games played: ' + this.numberOfgamesPlayed);
-    console.log('the AVG of sorter game: ' + this.avgSorter);
-    console.log('the AVG of Mixed game: ' + this.avgMixed);
+    console.log('the AVG of sorter game: ' + this.avgSorterGame);
+    console.log('the AVG of Mixed game: ' + this.avgMixedGame);
     console.log('the game with max AVG:  ' + this.gameMaxAvg);
     console.log('the game with min AVG:  ' + this.gameMinAvg);
     console.log(
@@ -131,7 +137,9 @@ export class DashbordComponent implements OnInit {
     );
     console.log('percents of games with perfect score: '+this.percentOfPerfectScore);
     console.log('category most  played: '+ this.categorysNumberOfPlayed);
-    console.log('id of max category played: '+ this.allCategory.filter(category=>category.id===this.maxCategoryPlayedId)[0].name)
+    this.maxCategoryPlayed=this.allCategory.filter(category=>category.id===this.maxCategoryPlayedId)[0].name;
+    console.log(' max category played: '+ this.allCategory.filter(category=>category.id===this.maxCategoryPlayedId)[0].name)
+    this.percentsCategorysLearned=(this.playedCategorys/this.allCategory.length)*100;
     console.log("percents of categorys have learned: "+(this.playedCategorys/this.allCategory.length)*100)
   }
 }
