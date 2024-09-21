@@ -75,7 +75,7 @@ export class DashbordComponent implements OnInit {
           if (result !== undefined) {
             this.allCategory = result;
             for (let x = 0; x < this.allCategory.length; x++) {
-              this.played = 0;
+              this.played = 0; 
               for (let y = 0; y < this.allGameResult.length; y++) {
                 if (
                   this.allGameResult[y].categoryID.indexOf(
