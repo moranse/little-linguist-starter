@@ -47,7 +47,7 @@ export class DashbordComponent implements OnInit {
           if (Number(this.allGameResult[x].gameID) === 3) {
             //for sorting game word sorter
             this.gameSorter.push(this.allGameResult[x]);
-            this.allGames[this.allGameResult[x].gameID].gamesPlayed.push()
+           // this.allGames[this.allGameResult[x].gameID].gamesPlayed.push()
           } else if (Number(this.allGameResult[x].gameID) === 2) {
             //for sorting game mixed letters
             this.gameMixed.push(this.allGameResult[x]);
