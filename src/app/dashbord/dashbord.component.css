@@ -34,3 +34,10 @@ h1{
   color: white;
   width: 170px;
   }
+  .custom-content :hover{
+    transform: scale(1.1);
+
+  }
+  mat-card-title{
+    font-size: 32px;
+  }

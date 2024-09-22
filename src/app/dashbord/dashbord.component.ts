@@ -153,8 +153,7 @@ export class DashbordComponent implements OnInit {
           (category) => category.id === this.maxCategoryPlayedId
         )[0].name
     );
-    this.percentsCategorysLearned =
-      (this.playedCategorys / this.allCategory.length) * 100;
+    this.percentsCategorysLearned = (this.playedCategorys / this.allCategory.length) * 100;
     console.log(
       'percents of categorys have learned: ' +
         (this.playedCategorys / this.allCategory.length) * 100

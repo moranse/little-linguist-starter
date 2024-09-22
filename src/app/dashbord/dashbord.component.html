@@ -12,61 +12,39 @@
     <mat-card-subtitle> Games played</mat-card-subtitle>
   </mat-card>
   <mat-card class="custom-content" appearance="outlined">
-    <mat-card-title>{{ this.avgSorterGame }}</mat-card-title>
-    <mat-card-subtitle
-      >The average of game Word Sorter:
-      </mat-card-subtitle>
-    >
+    <mat-card-title>{{ this.avgSorterGame.toFixed(2) }}</mat-card-title>
+    <mat-card-subtitle>Word Sorter game average points</mat-card-subtitle>
   </mat-card>
   <mat-card class="custom-content" appearance="outlined">
-    <mat-card-content
-      >The average of game Mixed Letters:
-      {{ this.avgMixedGame }}</mat-card-content
-    >
+    <mat-card-title>{{ this.avgMixedGame.toFixed(2) }}</mat-card-title>
+    <mat-card-subtitle> Mixed Letters game average points </mat-card-subtitle>
   </mat-card>
   <mat-card class="custom-content" appearance="outlined">
-    <mat-card-content
-      >The game with the max average: {{ this.gameMaxAvg }}</mat-card-content
-    >
+    <mat-card-title>{{ this.gameMaxAvg }}</mat-card-title>
+    <mat-card-subtitle> Game with max average </mat-card-subtitle>
   </mat-card>
   <mat-card class="custom-content" appearance="outlined">
-    <mat-card-content
-      >The game with the min average: {{ this.gameMinAvg }}</mat-card-content
-    >
+    <mat-card-title>{{ this.gameMinAvg }}</mat-card-title>
+    <mat-card-subtitle> Game with min average </mat-card-subtitle>
   </mat-card>
   <mat-card class="custom-content" appearance="outlined">
-    <mat-card-content
-      >The number of categorys that have played from all categorys:
-      {{ this.playedCategorys }}</mat-card-content
-    >
+    <mat-card-title>{{ this.playedCategorys }}</mat-card-title>
+    <mat-card-subtitle>Categorys that have played </mat-card-subtitle>
   </mat-card>
   <mat-card class="custom-content" appearance="outlined">
-    <mat-card-content
-      >The number of categorys that have NOT played yet:
-      {{ this.notPlayedCateory }}</mat-card-content
-    >
+    <mat-card-title>{{ this.notPlayedCateory }}</mat-card-title>
+      <mat-card-subtitle>Categorys NOT played yet:</mat-card-subtitle>
   </mat-card>
   <mat-card class="custom-content" appearance="outlined">
-    <mat-card-content
-      >Percents of games with perfect score of 100:
-      {{ this.percentOfPerfectScore }}</mat-card-content
-    >
+    <mat-card-title>{{ this.percentOfPerfectScore.toFixed(2) }} %</mat-card-title>
+    <mat-card-subtitle>Games with perfect score </mat-card-subtitle>
   </mat-card>
   <mat-card class="custom-content" appearance="outlined">
-    <mat-card-content
-      >Category most played:
-      {{ this.categorysNumberOfPlayed }}</mat-card-content
-    >
+    <mat-card-title> {{ this.maxCategoryPlayed }}</mat-card-title>
+    <mat-card-subtitle> Most played Category</mat-card-subtitle>
   </mat-card>
   <mat-card class="custom-content" appearance="outlined">
-    <mat-card-content
-      >Max category played: {{ this.maxCategoryPlayed }}</mat-card-content
-    >
-  </mat-card>
-  <mat-card class="custom-content" appearance="outlined">
-    <mat-card-content
-      >Percents of categorys that have learned:
-      {{ this.percentsCategorysLearned }}</mat-card-content
-    >
+    <mat-card-title>{{ this.percentsCategorysLearned.toFixed(2) }} %</mat-card-title>
+    <mat-card-subtitle>Categorys learned </mat-card-subtitle>
   </mat-card>
 </div>
