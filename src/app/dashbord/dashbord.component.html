@@ -12,39 +12,52 @@
     <mat-card-subtitle> Games played</mat-card-subtitle>
   </mat-card>
   <mat-card class="custom-content" appearance="outlined">
-    <mat-card-title>{{ this.avgSorterGame.toFixed(2) }}</mat-card-title>
+    <div *ngIf="!this.avgSorterGame">
+        <mat-card-title>--</mat-card-title>
+    </div>
+    <mat-card-title *ngIf="this.avgSorterGame>=0">{{ this.avgSorterGame.toFixed(2) }}</mat-card-title>
     <mat-card-subtitle>Word Sorter game average points</mat-card-subtitle>
   </mat-card>
   <mat-card class="custom-content" appearance="outlined">
-    <mat-card-title>{{ this.avgMixedGame.toFixed(2) }}</mat-card-title>
+    <div *ngIf="!this.avgMixedGame">
+        <mat-card-title>--</mat-card-title>
+        </div>
+    <mat-card-title *ngIf="this.avgMixedGame">{{ this.avgMixedGame.toFixed(2) }}</mat-card-title>
     <mat-card-subtitle> Mixed Letters game average points </mat-card-subtitle>
   </mat-card>
   <mat-card class="custom-content" appearance="outlined">
-    <mat-card-title>{{ this.gameMaxAvg }}</mat-card-title>
+    <mat-card-title *ngIf="!this.gameMaxAvg">--</mat-card-title>
+    <mat-card-title *ngIf="this.gameMaxAvg">{{ this.gameMaxAvg }}</mat-card-title>
     <mat-card-subtitle> Game with max average </mat-card-subtitle>
   </mat-card>
   <mat-card class="custom-content" appearance="outlined">
-    <mat-card-title>{{ this.gameMinAvg }}</mat-card-title>
+    <mat-card-title *ngIf="!this.gameMinAvg">--</mat-card-title>
+    <mat-card-title *ngIf="this.gameMinAvg">{{ this.gameMinAvg }}</mat-card-title>
     <mat-card-subtitle> Game with min average </mat-card-subtitle>
   </mat-card>
   <mat-card class="custom-content" appearance="outlined">
-    <mat-card-title>{{ this.playedCategorys }}</mat-card-title>
+    <mat-card-title *ngIf="!this.playedCategorys">--</mat-card-title>
+    <mat-card-title *ngIf="this.playedCategorys">{{ this.playedCategorys }}</mat-card-title>
     <mat-card-subtitle>Categorys that have played </mat-card-subtitle>
   </mat-card>
   <mat-card class="custom-content" appearance="outlined">
-    <mat-card-title>{{ this.notPlayedCateory }}</mat-card-title>
-      <mat-card-subtitle>Categorys NOT played yet:</mat-card-subtitle>
+    <mat-card-title *ngIf="!this.notPlayedCateory">--</mat-card-title>
+    <mat-card-title *ngIf="this.notPlayedCateory">{{ this.notPlayedCateory }}</mat-card-title>
+      <mat-card-subtitle>Categorys NOT played yet</mat-card-subtitle>
   </mat-card>
   <mat-card class="custom-content" appearance="outlined">
-    <mat-card-title>{{ this.percentOfPerfectScore.toFixed(2) }} %</mat-card-title>
+    <mat-card-title *ngIf="!this.percentOfPerfectScore">--</mat-card-title>
+    <mat-card-title *ngIf="this.percentOfPerfectScore">{{ this.percentOfPerfectScore.toFixed(2) }} %</mat-card-title>
     <mat-card-subtitle>Games with perfect score </mat-card-subtitle>
   </mat-card>
   <mat-card class="custom-content" appearance="outlined">
-    <mat-card-title> {{ this.maxCategoryPlayed }}</mat-card-title>
+    <mat-card-title *ngIf="!this.maxCategoryPlayed">--</mat-card-title>
+    <mat-card-title *ngIf="this.maxCategoryPlayed"> {{ this.maxCategoryPlayed }}</mat-card-title>
     <mat-card-subtitle> Most played Category</mat-card-subtitle>
   </mat-card>
   <mat-card class="custom-content" appearance="outlined">
-    <mat-card-title>{{ this.percentsCategorysLearned.toFixed(2) }} %</mat-card-title>
+    <mat-card-title *ngIf="!this.percentsCategorysLearned">--</mat-card-title>
+    <mat-card-title *ngIf="this.percentsCategorysLearned">{{ this.percentsCategorysLearned.toFixed(2) }} %</mat-card-title>
     <mat-card-subtitle>Categorys learned </mat-card-subtitle>
   </mat-card>
 </div>
