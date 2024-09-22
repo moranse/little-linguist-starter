@@ -5,3 +5,7 @@
 .pointer{
   cursor: pointer;
 }
+
+.pointer:hover{
+  font-size: 25px;
+}
