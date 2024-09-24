@@ -10,7 +10,7 @@
 
   <mat-card class="custom-content" appearance="outlined">
     <mat-card-title>{{ this.numberOfPoints }}</mat-card-title>
-    <mat-card-subtitle>Points</mat-card-subtitle>
+    <mat-card-subtitle>Points earned</mat-card-subtitle>
   </mat-card>
 
   <mat-card class="custom-content" appearance="outlined">
@@ -28,7 +28,7 @@
   <mat-card class="custom-content" appearance="outlined">
     <mat-card-title *ngIf="!this.percentOfPerfectScore">--</mat-card-title>
     <mat-card-title *ngIf="this.percentOfPerfectScore">{{ this.percentOfPerfectScore.toFixed(2) }} %</mat-card-title>
-    <mat-card-subtitle>Games with perfect score </mat-card-subtitle>
+    <mat-card-subtitle>Games with PERFECT score</mat-card-subtitle>
   </mat-card>
 
   <mat-card class="custom-content" appearance="outlined">
@@ -61,7 +61,7 @@
   <mat-card class="custom-content" appearance="outlined">
     <mat-card-title *ngIf="!this.maxCategoryPlayed">--</mat-card-title>
     <mat-card-title *ngIf="this.maxCategoryPlayed"> {{ this.maxCategoryPlayed }}</mat-card-title>
-    <mat-card-subtitle> Most played Category</mat-card-subtitle>
+    <mat-card-subtitle> is the MOST played Category</mat-card-subtitle>
   </mat-card>
   <mat-card class="custom-content" appearance="outlined">
     <mat-card-title *ngIf="!this.percentsCategorysLearned">--</mat-card-title>

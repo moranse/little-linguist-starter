@@ -35,7 +35,7 @@ h1:hover{
   float: left;
   margin: 6px;
   border-radius: 20px;
-  border-width: calc(100% - 50px); /*for making the borded dynamic*/
+  border-width: calc(100% - 50px);
   background-color: #303f9f;
   color: white;
   width: 170px;
@@ -55,4 +55,11 @@ h1:hover{
 
   mat-card-title:hover{
     font-size: 45px;
+  }
+  mat-card-subtitle{
+    color: aliceblue;
+    position: static;
+  }
+  mat-card-subtitle:hover{
+    font-weight: bold;
   }
