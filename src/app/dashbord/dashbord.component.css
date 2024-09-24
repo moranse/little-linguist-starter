@@ -1,42 +1,42 @@
-.container{
-    display: flex;
-    justify-content: center;
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-    grid-template-rows: 1fr 1fr 1fr;
-    gap: 2px 2px;
+.container {
+  display: flex;
+  justify-content: center;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  grid-template-rows: 1fr 1fr 1fr;
+  gap: 2px 2px;
 }
-.game{
-    border: 1px solid;
-    margin: 15px;
-    width: 250px;
-    height: 180px;
-    text-align: center;
-    float: left;
-    border-radius: 30px;
+.game {
+  border: 1px solid;
+  margin: 15px;
+  width: 250px;
+  height: 180px;
+  text-align: center;
+  float: left;
+  border-radius: 30px;
 }
-h1{
-    text-align: center;
-    font-size: 80px;
+h1 {
+  text-align: center;
+  font-size: 80px;
 }
-h1:hover{
-    font-size: 84px;
+h1:hover {
+  font-size: 84px;
 }
 
-.gamenification{
+.gamenification {
   color: white;
-    margin: 20px auto;
-    text-align: center;
-    background-color: #303f9f;
-    font-size: larger;
-    width: 690px;
-    border-radius: 10px;
-    border-color:yellow;
+  margin: 20px auto;
+  text-align: center;
+  background-color: #303f9f;
+  font-size: larger;
+  width: 690px;
+  border-radius: 10px;
+  border-color: yellow;
 }
 .custom-spinner {
-    color: blue;
-    margin: 20px auto;
-  }
+  color: blue;
+  margin: 20px auto;
+}
 .custom-content {
   position: relative;
   border: 1px solid;
@@ -51,31 +51,31 @@ h1:hover{
   color: white;
   width: 170px;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.15);
-  justify-content:center;
-  }
+  justify-content: center;
+}
 
-  .custom-content :hover{
-    width: 180px; 
-  }
+.custom-content :hover {
+  width: 180px;
+}
 
-  mat-card-title{
-    font-size: 32px;
-    font-weight: bold;
-    align-self: center;
-    align-items: center;
-  }
+mat-card-title {
+  font-size: 32px;
+  font-weight: bold;
+  align-self: center;
+  align-items: center;
+}
 
-  mat-card-title:hover{
-    font-size: 45px;
-  }
-  mat-card-subtitle{
-    color: aliceblue;
-    position: static;
-  }
-  mat-card-subtitle:hover{
-    font-weight: bold;
-  }
-  .bold {
-    font-weight: bold;
-    font-size: larger;
-  }
+mat-card-title:hover {
+  font-size: 45px;
+}
+mat-card-subtitle {
+  color: aliceblue;
+  position: static;
+}
+mat-card-subtitle:hover {
+  font-weight: bold;
+}
+.bold {
+  font-weight: bold;
+  font-size: larger;
+}

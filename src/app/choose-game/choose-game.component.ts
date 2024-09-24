@@ -1,11 +1,6 @@
 import { CategoriesService } from './../services/categories.service';
 import { GamesService } from './../services/games.service';
-import {
-  Component,
-  ChangeDetectionStrategy,
-  OnInit,
-  inject,
-} from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { MatCardModule } from '@angular/material/card';
 import { GameProfile } from '../../shared/model/gameProfile';
 import { CommonModule } from '@angular/common';

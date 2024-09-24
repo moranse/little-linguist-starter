@@ -9,7 +9,7 @@ export class GamesService {
     new GameProfile(
       1,
       'Trivia',
-      "Choose every word's translation from a list of 4 points",
+      "Choose every word's translation from a list of 4 options",
       'trivia'
     ),
     new GameProfile(
@@ -23,6 +23,12 @@ export class GamesService {
       'Word Sorter',
       'Categorize words by dragging and dropping them into the right category',
       'wordsorter'
+    ),
+    new GameProfile(
+      4,
+      'cards memory game',
+      'find per of words, in each per: the english word and translation in hebrew',
+      'memory'
     ),
   ];
 
