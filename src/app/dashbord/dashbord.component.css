@@ -28,7 +28,9 @@ h1:hover{
     text-align: center;
     background-color: #303f9f;
     font-size: larger;
-    width: 660px;
+    width: 690px;
+    border-radius: 10px;
+    border-color:yellow;
 }
 .custom-spinner {
     color: blue;
@@ -70,4 +72,8 @@ h1:hover{
   }
   mat-card-subtitle:hover{
     font-weight: bold;
+  }
+  .bold {
+    font-weight: bold;
+    font-size: larger;
   }

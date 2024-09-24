@@ -41,6 +41,8 @@ export class DashbordComponent implements OnInit {
   isFullyLoaded = false;
   gamesThisMonth :gameResult[] = [];
   gamesNeeded=0;
+  currentDate = new Date();
+  streak = 0;
 
   constructor(
     private gameResultService: gameResultService,
@@ -56,12 +58,19 @@ export class DashbordComponent implements OnInit {
         console.log(this.allGameResult);
         let sumOfPerfectGame = 0;
 
-// Calculate games played in the current month
+// Calculate number of games played in the current month
 const today = new Date();
 const firstDayOfMonth = new Date(today.getFullYear(), today.getMonth(), 1);
 this.gamesThisMonth = this.allGameResult.filter(
   (game) => new Date(game.date) >= firstDayOfMonth
 );
+
+// Calculate streak of days playing games
+while (this.hasGameOnDay(this.currentDate)) {
+  this.streak++;
+  this.currentDate.setDate(this.currentDate.getDate() - 1);
+}
+console.log("Current streak:", this.streak);
 
         for (let x = 0; x < this.allGameResult.length; x++) {
           if (this.allGameResult[x].pointsNumber === 100) {
@@ -71,7 +80,6 @@ this.gamesThisMonth = this.allGameResult.filter(
           if (Number(this.allGameResult[x].gameID) === 3) {
             //for sorting game word sorter
             this.gameSorter.push(this.allGameResult[x]);
-            // this.allGames[this.allGameResult[x].gameID].gamesPlayed.push()
           } else if (Number(this.allGameResult[x].gameID) === 2) {
             //for sorting game mixed letters
             this.gameMixed.push(this.allGameResult[x]);
@@ -83,15 +91,11 @@ this.gamesThisMonth = this.allGameResult.filter(
 
 // Calculate games needed to reach the challenge (20)
 this.gamesNeeded = 20 - this.gamesThisMonth.length;
-// Update UI based on challenge status
 if (this.gamesThisMonth.length >= 20) {
-  console.log("Congratulations! You've met the monthly challenge.")
-  // User has met the challenge
+  console.log("Congratulations! You've met the monthly challenge")
 } else {
-  // User hasn't met the challenge
   console.log("You've played " + this.gamesThisMonth.length +" games this month. Play another " +this.gamesNeeded + " games to reach the monthly challenge of 20 games!")
 }
-
         this.percentOfPerfectScore =
           (sumOfPerfectGame / this.allGameResult.length) * 100;
 
@@ -155,4 +159,17 @@ if (this.gamesThisMonth.length >= 20) {
     )[0].name;
     this.percentsCategorysLearned = (this.playedCategorys / this.allCategory.length) * 100;
   }
+
+  hasGameOnDay(date: Date): boolean {
+    return this.allGameResult.some((gameResult) => {
+      const gameDate = new Date(gameResult.date);
+      return gameDate.getFullYear() === date.getFullYear() &&
+             gameDate.getMonth() === date.getMonth() &&
+             gameDate.getDate() === date.getDate();
+    });
+  }
+
 }
+
+
+

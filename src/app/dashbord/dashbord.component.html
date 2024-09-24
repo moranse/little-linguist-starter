@@ -8,7 +8,15 @@
         Congratulations! You've met the monthly challenge
     </mat-card-content>
     <ng-template #notsuccess>
-        You've played {{this.gamesThisMonth.length}} games this month.<br> Play another {{this.gamesNeeded}} games to reach the monthly challenge of 20 games!
+        You've played <span class="bold"> {{this.gamesThisMonth.length}} </span> games this month. Play another <span class="bold"> {{this.gamesNeeded}} </span> games to reach the monthly challenge of 20 games!
+    </ng-template>
+  </mat-card>
+  <mat-card class="gamenification" appearance="outlined" *ngIf="isFullyLoaded">
+    <mat-card-content *ngIf="this.streak; else notstreak">
+        Current streak till today: <br> <span class="bold"> {{this.streak}} </span>
+        </mat-card-content>
+    <ng-template #notstreak>
+        Welcome back! <br> Enter the gaming area and play a game. <br> Persistence creates excellence!
     </ng-template>
   </mat-card>
 
