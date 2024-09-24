@@ -1,7 +1,10 @@
 .container{
     display: flex;
     justify-content: center;
-    
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    grid-template-rows: 1fr 1fr 1fr;
+    gap: 10px;
 }
 .game{
     border: 1px solid;
@@ -15,6 +18,9 @@
 h1{
     text-align: center;
     font-size: 80px;
+}
+h1:hover{
+    font-size: 84px;
 }
 .custom-spinner {
     color: blue;
@@ -34,13 +40,19 @@ h1{
   color: white;
   width: 170px;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.15);
-
   }
+
   .custom-content :hover{
-    transform: scale(1.1);
-
+    width: 180px; 
   }
+
   mat-card-title{
     font-size: 32px;
     font-weight: bold;
+    align-self: center;
+    align-items: center;
+  }
+
+  mat-card-title:hover{
+    font-size: 45px;
   }
