@@ -39,6 +39,8 @@ export class DashbordComponent implements OnInit {
   maxCategoryPlayed = '';
   percentsCategorysLearned = 0;
   isFullyLoaded = false;
+  gamesThisMonth :gameResult[] = [];
+  gamesNeeded=0;
 
   constructor(
     private gameResultService: gameResultService,
@@ -53,6 +55,13 @@ export class DashbordComponent implements OnInit {
         this.allGameResult = result;
         console.log(this.allGameResult);
         let sumOfPerfectGame = 0;
+
+// Calculate games played in the current month
+const today = new Date();
+const firstDayOfMonth = new Date(today.getFullYear(), today.getMonth(), 1);
+this.gamesThisMonth = this.allGameResult.filter(
+  (game) => new Date(game.date) >= firstDayOfMonth
+);
 
         for (let x = 0; x < this.allGameResult.length; x++) {
           if (this.allGameResult[x].pointsNumber === 100) {
@@ -71,6 +80,18 @@ export class DashbordComponent implements OnInit {
             this.gameTriva.push(this.allGameResult[x]);
           }
         }
+
+// Calculate games needed to reach the challenge (20)
+this.gamesNeeded = 20 - this.gamesThisMonth.length;
+// Update UI based on challenge status
+if (this.gamesThisMonth.length >= 20) {
+  console.log("Congratulations! You've met the monthly challenge.")
+  // User has met the challenge
+} else {
+  // User hasn't met the challenge
+  console.log("You've played " + this.gamesThisMonth.length +" games this month. Play another " +this.gamesNeeded + " games to reach the monthly challenge of 20 games!")
+}
+
         this.percentOfPerfectScore =
           (sumOfPerfectGame / this.allGameResult.length) * 100;
 
@@ -118,45 +139,20 @@ export class DashbordComponent implements OnInit {
                 this.playedCategorys++;
               }
             }
-            this.notPlayedCateory =
-              this.allCategory.length - this.playedCategorys;
-            this.loadingDashbored();
+            this.afterLoadingDashbored();
           }
-        });
+        });        
       }
       this.isFullyLoaded = true;
     });
   }
-  loadingDashbored() {
-    console.log('number of points in all games: ' + this.numberOfPoints);
-    console.log('number of games played: ' + this.numberOfgamesPlayed);
-    console.log('the AVG of sorter game: ' + this.avgSorterGame);
-    console.log('the AVG of Mixed game: ' + this.avgMixedGame);
-    console.log('the game with max AVG:  ' + this.gameMaxAvg);
-    console.log('the game with min AVG:  ' + this.gameMinAvg);
-    console.log(
-      'the number of categorys that have played: ' + this.playedCategorys
-    );
-    console.log(
-      'the number of categorys that have NOT played: ' + this.notPlayedCateory
-    );
-    console.log(
-      'percents of games with perfect score: ' + this.percentOfPerfectScore
-    );
-    console.log('category most  played: ' + this.categorysNumberOfPlayed);
+
+  afterLoadingDashbored() {
+    this.notPlayedCateory =
+      this.allCategory.length - this.playedCategorys;
     this.maxCategoryPlayed = this.allCategory.filter(
       (category) => category.id === this.maxCategoryPlayedId
     )[0].name;
-    console.log(
-      ' max category played: ' +
-        this.allCategory.filter(
-          (category) => category.id === this.maxCategoryPlayedId
-        )[0].name
-    );
     this.percentsCategorysLearned = (this.playedCategorys / this.allCategory.length) * 100;
-    console.log(
-      'percents of categorys have learned: ' +
-        (this.playedCategorys / this.allCategory.length) * 100
-    );
   }
 }

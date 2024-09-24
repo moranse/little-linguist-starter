@@ -22,6 +22,14 @@ h1{
 h1:hover{
     font-size: 84px;
 }
+.gamenification{
+  color: white;
+    margin: 20px auto;
+    text-align: center;
+    background-color: #303f9f;
+    font-size: larger;
+    width: 660px;
+}
 .custom-spinner {
     color: blue;
     margin: 20px auto;

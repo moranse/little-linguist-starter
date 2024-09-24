@@ -2,7 +2,18 @@
 <div *ngIf="!isFullyLoaded">
   <mat-spinner class="custom-spinner"></mat-spinner>
 </div>
+
+<mat-card class="gamenification" appearance="outlined" *ngIf="isFullyLoaded">
+    <mat-card-content *ngIf="this.gamesThisMonth.length >= 20; else notsuccess">
+        Congratulations! You've met the monthly challenge
+    </mat-card-content>
+    <ng-template #notsuccess>
+        You've played {{this.gamesThisMonth.length}} games this month.<br> Play another {{this.gamesNeeded}} games to reach the monthly challenge of 20 games!
+    </ng-template>
+  </mat-card>
+
 <div *ngIf="isFullyLoaded" class="container">
+    
     <mat-card class="custom-content" appearance="outlined">
         <mat-card-title>{{ this.numberOfgamesPlayed }}</mat-card-title>
         <mat-card-subtitle> Games played</mat-card-subtitle>
@@ -38,6 +49,7 @@
     <mat-card-title *ngIf="this.avgSorterGame>=0">{{ this.avgSorterGame.toFixed(2) }}</mat-card-title>
     <mat-card-subtitle>Word Sorter game average points</mat-card-subtitle>
   </mat-card>
+
   <mat-card class="custom-content" appearance="outlined">
     <div *ngIf="!this.avgMixedGame">
         <mat-card-title>--</mat-card-title>
@@ -63,6 +75,7 @@
     <mat-card-title *ngIf="this.maxCategoryPlayed"> {{ this.maxCategoryPlayed }}</mat-card-title>
     <mat-card-subtitle> is the MOST played Category</mat-card-subtitle>
   </mat-card>
+
   <mat-card class="custom-content" appearance="outlined">
     <mat-card-title *ngIf="!this.percentsCategorysLearned">--</mat-card-title>
     <mat-card-title *ngIf="this.percentsCategorysLearned">{{ this.percentsCategorysLearned.toFixed(2) }} %</mat-card-title>
