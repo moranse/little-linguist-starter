@@ -56,7 +56,7 @@ allGames:GameProfile[]=[];
       this.summeryArray = JSON.parse(decodeURIComponent(params['summery']));
       this.goodAnswer = this.summeryArray[0];
       this.badAnswer = this.summeryArray[1];
-      this.gameID = parseInt(params['gameID']);
+      this.gameID = parseInt(params['gameID']); 
       this.wordStatusArray = JSON.parse(
         decodeURIComponent(params['wordStatus'])
       );
