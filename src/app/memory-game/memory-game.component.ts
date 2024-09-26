@@ -148,7 +148,7 @@ export class MemoryGameComponent implements OnInit {
             this.firstFlippedCard.isFlipped = false;
           }
           this.firstFlippedCard = null;
-        }, 2000);
+        }, 1000);
       }
     } else {
       if (!this.cardGrid[cardIndex].isFlipped) {

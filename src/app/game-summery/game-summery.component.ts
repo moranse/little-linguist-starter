@@ -33,7 +33,7 @@ export class GameSummeryComponent implements OnInit {
   @Input() wordStatus?: string;
   summeryArray: number[] = [];
   wordStatusArray: number[] = [];
-allGames:GameProfile[]=[];
+  allGames: GameProfile[] = [];
   goodAnswer = 0;
   badAnswer = 0;
   currentCategory?: Category;
@@ -44,19 +44,19 @@ allGames:GameProfile[]=[];
   gameID = -1;
 
   constructor(
-    private GamesService:GamesService,
+    private GamesService: GamesService,
     private categoriesService: CategoriesService,
     private gameResultService: gameResultService,
     private route: ActivatedRoute
   ) {}
 
   ngOnInit(): void {
-    this.allGames=this.GamesService.list();
+    this.allGames = this.GamesService.list();
     this.route.queryParams.subscribe((params) => {
       this.summeryArray = JSON.parse(decodeURIComponent(params['summery']));
       this.goodAnswer = this.summeryArray[0];
       this.badAnswer = this.summeryArray[1];
-      this.gameID = parseInt(params['gameID']); 
+      this.gameID = parseInt(params['gameID']);
       this.wordStatusArray = JSON.parse(
         decodeURIComponent(params['wordStatus'])
       );
@@ -82,24 +82,22 @@ allGames:GameProfile[]=[];
                 'for showing the category name to user, The category name is: ' +
                   this.currentCategory?.name
               );
-              if(this.gameID===4){
-                if(this.badAnswer===0){
-                  this.grade=100;
+              if (this.gameID === 4) {
+                if (this.badAnswer === 0) {
+                  this.grade = 100;
                 }
-                this.grade=this.summeryArray[2];
-              }else{
-                
-              
-              this.points = Math.floor(
-                this.grade / this.randomWordArray.length
-              ); //how many points for each good answer
-              if (!this.wordStatusArray.includes(0)) {
-                this.grade;
-                console.log(this.grade);
+                this.grade = this.summeryArray[2];
               } else {
-                this.grade = this.points * this.goodAnswer;
+                this.points = Math.floor(
+                  this.grade / this.randomWordArray.length
+                ); //how many points for each good answer
+                if (!this.wordStatusArray.includes(0)) {
+                  this.grade;
+                  console.log(this.grade);
+                } else {
+                  this.grade = this.points * this.goodAnswer;
+                }
               }
-            }
               this.isFullyLoaded = true;
               const gameResult_ = new gameResult(
                 '',

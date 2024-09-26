@@ -7,12 +7,12 @@ import { GameProfile } from '../../shared/model/gameProfile';
 import { Category } from '../../shared/model/category';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { CommonModule } from '@angular/common';
-import {MatCardModule} from '@angular/material/card';
+import { MatCardModule } from '@angular/material/card';
 
 @Component({
   selector: 'app-dashbord',
   standalone: true,
-  imports: [MatProgressSpinnerModule, CommonModule,MatCardModule],
+  imports: [MatProgressSpinnerModule, CommonModule, MatCardModule],
   templateUrl: './dashbord.component.html',
   styleUrl: './dashbord.component.css',
 })
@@ -25,10 +25,13 @@ export class DashbordComponent implements OnInit {
   gameMixed: gameResult[] = [];
   gameSorter: gameResult[] = [];
   gameTriva: gameResult[] = [];
+  gameMemory: gameResult[] = [];
   sumMixedGame = 0;
   avgMixedGame = 0;
   sumSorterGame = 0;
   avgSorterGame = 0;
+  sumMemoryGame = 0;
+  avgMemoryGame = 0;
   gameMaxAvg = '';
   gameMinAvg = '';
   playedCategorys = 0;
@@ -39,8 +42,8 @@ export class DashbordComponent implements OnInit {
   maxCategoryPlayed = '';
   percentsCategorysLearned = 0;
   isFullyLoaded = false;
-  gamesThisMonth :gameResult[] = [];
-  gamesNeeded=0;
+  gamesThisMonth: gameResult[] = [];
+  gamesNeeded = 0;
   currentDate = new Date();
   streak = 0;
 
@@ -58,19 +61,23 @@ export class DashbordComponent implements OnInit {
         console.log(this.allGameResult);
         let sumOfPerfectGame = 0;
 
-// Calculate number of games played in the current month
-const today = new Date();
-const firstDayOfMonth = new Date(today.getFullYear(), today.getMonth(), 1);
-this.gamesThisMonth = this.allGameResult.filter(
-  (game) => new Date(game.date) >= firstDayOfMonth
-);
+        // Calculate number of games played in the current month
+        const today = new Date();
+        const firstDayOfMonth = new Date(
+          today.getFullYear(),
+          today.getMonth(),
+          1
+        );
+        this.gamesThisMonth = this.allGameResult.filter(
+          (game) => new Date(game.date) >= firstDayOfMonth
+        );
 
-// Calculate streak of days playing games
-while (this.hasGameOnDay(this.currentDate)) {
-  this.streak++;
-  this.currentDate.setDate(this.currentDate.getDate() - 1);
-}
-console.log("Current streak:", this.streak);
+        // Calculate streak of days playing games
+        while (this.hasGameOnDay(this.currentDate)) {
+          this.streak++;
+          this.currentDate.setDate(this.currentDate.getDate() - 1);
+        }
+        console.log('Current streak:', this.streak);
 
         for (let x = 0; x < this.allGameResult.length; x++) {
           if (this.allGameResult[x].pointsNumber === 100) {
@@ -83,19 +90,28 @@ console.log("Current streak:", this.streak);
           } else if (Number(this.allGameResult[x].gameID) === 2) {
             //for sorting game mixed letters
             this.gameMixed.push(this.allGameResult[x]);
+          } else if (Number(this.allGameResult[x].gameID) === 4) {
+            //for sorting game memory
+            this.gameMemory.push(this.allGameResult[x]);
           } else {
             //for sorting game Trivia - not in use yet
             this.gameTriva.push(this.allGameResult[x]);
           }
         }
 
-// Calculate games needed to reach the challenge (20)
-this.gamesNeeded = 20 - this.gamesThisMonth.length;
-if (this.gamesThisMonth.length >= 20) {
-  console.log("Congratulations! You've met the monthly challenge")
-} else {
-  console.log("You've played " + this.gamesThisMonth.length +" games this month. Play another " +this.gamesNeeded + " games to reach the monthly challenge of 20 games!")
-}
+        // Calculate games needed to reach the challenge (20)
+        this.gamesNeeded = 20 - this.gamesThisMonth.length;
+        if (this.gamesThisMonth.length >= 20) {
+          console.log("Congratulations! You've met the monthly challenge");
+        } else {
+          console.log(
+            "You've played " +
+              this.gamesThisMonth.length +
+              ' games this month. Play another ' +
+              this.gamesNeeded +
+              ' games to reach the monthly challenge of 20 games!'
+          );
+        }
         this.percentOfPerfectScore =
           (sumOfPerfectGame / this.allGameResult.length) * 100;
 
@@ -104,16 +120,34 @@ if (this.gamesThisMonth.length >= 20) {
           this.sumSorterGame += this.gameSorter[x].pointsNumber;
         }
         this.avgSorterGame = this.sumSorterGame / this.gameSorter.length;
+
         for (let x = 0; x < this.gameMixed.length; x++) {
           this.sumMixedGame += this.gameMixed[x].pointsNumber;
         }
         this.avgMixedGame = this.sumMixedGame / this.gameMixed.length;
-        if (this.avgMixedGame > this.avgSorterGame) {
+
+        for (let x = 0; x < this.gameMemory.length; x++) {
+          this.sumMemoryGame += this.gameMemory[x].pointsNumber;
+        }
+        this.avgMemoryGame = this.sumMemoryGame / this.gameMemory.length;
+
+        if (
+          this.avgMixedGame > this.avgSorterGame &&
+          this.avgMixedGame > this.avgMemoryGame
+        ) {
           this.gameMaxAvg = 'Mixed Letters Game';
-          this.gameMinAvg = 'Word Sorter Game';
-        } else {
-          this.gameMaxAvg = 'Word Sorter Game';
-          this.gameMinAvg = 'Mixed Letters Game';
+          if (this.avgMemoryGame > this.avgSorterGame) {
+            this.gameMinAvg = 'Word Sorter Game';
+          } else {
+            this.gameMinAvg = 'Memory card Game';
+          }
+        } else if (this.avgMemoryGame > this.avgSorterGame) {
+          this.gameMaxAvg = 'Memory card Game';
+          if (this.avgSorterGame > this.avgMixedGame) {
+            this.gameMinAvg = 'Mixed Letters Game';
+          } else {
+            this.gameMinAvg = 'Word Sorter Game';
+          }
         }
         this.CategoriesService.list().then((result: Category[] | undefined) => {
           if (result !== undefined) {
@@ -145,31 +179,29 @@ if (this.gamesThisMonth.length >= 20) {
             }
             this.afterLoadingDashbored();
           }
-        });        
+        });
       }
       this.isFullyLoaded = true;
     });
   }
 
   afterLoadingDashbored() {
-    this.notPlayedCateory =
-      this.allCategory.length - this.playedCategorys;
+    this.notPlayedCateory = this.allCategory.length - this.playedCategorys;
     this.maxCategoryPlayed = this.allCategory.filter(
       (category) => category.id === this.maxCategoryPlayedId
     )[0].name;
-    this.percentsCategorysLearned = (this.playedCategorys / this.allCategory.length) * 100;
+    this.percentsCategorysLearned =
+      (this.playedCategorys / this.allCategory.length) * 100;
   }
 
   hasGameOnDay(date: Date): boolean {
     return this.allGameResult.some((gameResult) => {
       const gameDate = new Date(gameResult.date);
-      return gameDate.getFullYear() === date.getFullYear() &&
-             gameDate.getMonth() === date.getMonth() &&
-             gameDate.getDate() === date.getDate();
+      return (
+        gameDate.getFullYear() === date.getFullYear() &&
+        gameDate.getMonth() === date.getMonth() &&
+        gameDate.getDate() === date.getDate()
+      );
     });
   }
-
 }
-
-
-
