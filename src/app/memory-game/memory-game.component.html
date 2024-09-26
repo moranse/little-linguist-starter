@@ -9,27 +9,12 @@
       </div>
     <div *ngIf="isFullyLoaded"></div>
         <mat-card class="custom-content" *ngFor="let card of cardGrid; let i = index" (click)="flipCard(i)">
-          <mat-card-content *ngIf="!card.isFlipped">{{ card.word.origin }}</mat-card-content>
+            <mat-card-content *ngIf="card.isFlipped">{{ card.word.origin }}</mat-card-content>
+            <mat-card-content *ngIf="!card.isFlipped"> </mat-card-content>
         </mat-card>
-        <mat-card class="custom-content" *ngFor="let card of cardGrid; let i = index" (click)="flipCard(i)">
-            <mat-card-content *ngIf="!card.isFlipped">{{ card.word.target }}</mat-card-content>
+        <mat-card class="custom-content" *ngFor="let card of cardGrid; let i = index" (click)="flipSecCard(i)">
+            <mat-card-content *ngIf="!card.isFlipped"> </mat-card-content>
+            <mat-card-content *ngIf="card.isFlipped">{{ card.word.target }}</mat-card-content>
           </mat-card>
-
-        <!-- <div class="progressBarStyle">
-            <div class="progress-info">
-              <mat-card class="icon-left">
-                <mat-card-content>{{ startPlace }}</mat-card-content>
-              </mat-card>
-            </div>
-            <mat-progress-bar
-              mode="determinate"
-              value="{{ progressValue }}"
-            ></mat-progress-bar>
-            <div class="progress-info">
-              <mat-card class="icon-right">
-                <mat-card-content>{{ endPlace }}</mat-card-content>
-              </mat-card>
-            </div>
-          </div> -->
       </div>      
     </div>

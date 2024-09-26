@@ -43,7 +43,6 @@ export class MemoryGameComponent implements OnInit {
   textOfButton: string = '';
   anser = ['']; //dialog parameter
   goodAnswer = 0;
-  badAnswer = 0;
   summery: number[] = []; //array of the users anser and category id
   wordStatus: number[] = []; //array of the word status if user anser correct or not
   points = 0; //how many points for each good answer
@@ -54,9 +53,12 @@ export class MemoryGameComponent implements OnInit {
   randomTargetWord = ''; //for keeping the random target word from category
   randomNumber = -1;
   cardGrid: { isFlipped: boolean; word: { origin: string; target: string } }[] = [];
-  firstFlippedCard: any;
+  firstFlippedCard:{word: { origin: string; target: string } }[] = [];
   totalWords: number = 0;
   score: number = 0;
+  cardIndex1:number=-1;
+  cardIndex2:number=-1;
+
 
   constructor(
     private gamesService: GamesService,
@@ -72,18 +74,17 @@ export class MemoryGameComponent implements OnInit {
         .get(this.id)
         .then((result: Category | undefined) => {
           this.currentCategory = result;
-          if (this.currentCategory != undefined) {
-            const stepValue = 100 / this.currentCategory.words.length;
-            this.progressValue = stepValue;
-            this.endPlace = this.currentCategory?.words.length;
-
-            this.totalWords = this.currentCategory.words.length;
+    if (this.currentCategory != undefined) {
+      const stepValue = 100 / this.currentCategory.words.length;
+      this.progressValue = stepValue;
+      this.endPlace = this.currentCategory?.words.length;
+      this.totalWords = this.currentCategory.words.length;
             this.cardGrid = this.currentCategory.words.map((word) => ({
               isFlipped: false,
               word: { origin: word.origin, target: word.target },
             }));
 console.log(this.cardGrid)
-
+this.shuffleWord();
           }
           this.isFullyLoaded = true;
         });
@@ -91,27 +92,26 @@ console.log(this.cardGrid)
   }
 
   shuffleWord() {
-    // Shuffle the entire cardGrid using Fisher-Yates algorithm
+    // Shuffle the cardGrid
     for (let i = this.cardGrid.length - 1; i > 0; i--) {
       const j = Math.floor(Math.random() * (i + 1));
       [this.cardGrid[i], this.cardGrid[j]] = [this.cardGrid[j], this.cardGrid[i]];
     }
   }
-        
 
-  getOrigenWord() {
-    //get the origen word
-    return this.currentCategory?.words[this.index].target;
-  }
+  // getOrigenWord() {
+  //   //get the origen word
+  //   return this.currentCategory?.words[this.index].target;
+  // }
 
   nextStage() {
     //all i check befor moving to next stage
     if (this.currentCategory?.words.length != undefined) {
       //for handeling the undefined use case
       this.points = Math.floor(100 / this.currentCategory.words.length); //how many points for each good answer
-      if (
-        this.usersAnser.toUpperCase() ==
-        this.currentCategory.words[this.index].origin.toUpperCase()
+      if (//change to match chek!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+        this.usersAnser ==
+        this.currentCategory.words[this.index].origin
       ) {
         this.textOfSuccessOrFail = 'Great Job!';
         this.textOfButton = 'CONTINUE';
@@ -128,47 +128,21 @@ console.log(this.cardGrid)
         this.anser = [this.textOfSuccessOrFail, this.textOfButton];
         this.SuccessOrFailDialog();
         console.log('wrong answer - add to summery');
-        this.badAnswer++;
-        this.wordStatus.push(0); //represant rong answer
       }
       const stepValue = 100 / this.currentCategory?.words.length;
       this.progressValue += stepValue;
       this.index++;
       this.howManyWordsLeft();
-      this.resetInput();
       console.log('before last word');
       if (this.index == this.currentCategory?.words.length) {
         console.log('after finishing all words');
         this.summery.push(this.goodAnswer); //add the finael rezultes of the users answer to summery arry
         console.log(this.summery);
-        this.summery.push(this.badAnswer); //add the finael rezultes of the users answer to summery arry
-        this.routToSummery();
-      } else {
-        this.shuffleWord();
-      }
+        this.checkGameOver();
+      } //else {
+      //   this.shuffleWord();
+      // }
     }
-  }
-
-  doUserAnser() {
-    //for checking if user is typing. the word. the word is shuffled every time the user is typing because of the using of two way data binding
-    if (this.usersAnser != '') {
-      //for having anser from the user
-      console.log('the user is typing');
-      this.clickButton = false;
-      console.log('user anser. ' + 'the click value is: ' + this.clickButton);
-      return false;
-    } else {
-      this.clickButton = true;
-      console.log(
-        'user didnt anser. ' + 'the click value is: ' + this.clickButton
-      );
-      return true;
-    }
-  }
-
-  resetInput() {
-    //for resting the input
-    this.usersAnser = '';
   }
 
   exitGame() {
@@ -202,34 +176,74 @@ console.log(this.cardGrid)
     }
   }
   flipCard(cardIndex: number) {
-    const card = this.cardGrid[cardIndex];
-    if (!card.isFlipped) {
-      card.isFlipped = true;
-      if (!this.firstFlippedCard) {
-        this.firstFlippedCard = card;
-      } else {
-        if (this.firstFlippedCard.word.origin === card.word.origin) {
-          this.score += this.calculatePointsPerMatch(); // Add points for correct match
-        } else {
-          this.deductPointsForIncorrectMatch();
-        }
-        this.firstFlippedCard = null;
-        this.checkGameOver(); // Check if all cards are matched
-      }
+    if(cardIndex!==undefined){
+    if (!this.cardGrid[cardIndex]) {
+      // No card flipped yet, flip this one
+      this.cardGrid[cardIndex].isFlipped = true;
+      //this.firstFlippedCard= this.cardGrid[cardIndex];
+      this.cardIndex1=cardIndex;
+    } else if (this.cardGrid[cardIndex] !== this.cardGrid[this.cardIndex1] && !this.cardGrid[cardIndex].isFlipped) {
+      // Different card clicked and not already flipped, flip it
+      this.cardGrid[cardIndex].isFlipped = true;
+      this.cardIndex1=cardIndex;
+      this.checkMatch();
+      cardIndex = -1; // Reset after checking match
     }
   }
-  
-  calculatePointsPerMatch() {
-    return 100 / this.totalWords;
   }
-  
-  deductPointsForIncorrectMatch() {
-    // Adjust deduction logic as needed (e.g., deduct a percentage of points per attempt)
-    this.score -= this.calculatePointsPerMatch() / 2;
+  flipSecCard(cardIndex: number) {
+    if(cardIndex!==undefined){
+    if (!this.cardGrid[cardIndex]) {
+      // No card flipped yet, flip this one
+      this.cardGrid[cardIndex].isFlipped = true;
+      //this.firstFlippedCard= this.cardGrid[cardIndex];
+      this.cardIndex2=cardIndex;
+    } else if (this.cardGrid[cardIndex] !== this.cardGrid[this.cardIndex2] && !this.cardGrid[cardIndex].isFlipped) {
+      // Different card clicked and not already flipped, flip it
+      this.cardGrid[cardIndex].isFlipped = true;
+      this.cardIndex2=cardIndex;
+      this.checkMatch();
+      cardIndex = -1; // Reset after checking match
+    }
   }
+  }
+
+  checkMatch() {
+    if(this.cardGrid[this.cardIndex1].word!==undefined && this.cardGrid[this.cardIndex2].word!==undefined){
+      if (this.cardGrid[this.cardIndex1]?.word.target === this.cardGrid[this.cardIndex2]?.word.target) {
+        console.log("Cards Matched!");
+      } else {
+        // Not matched, flip them back after a short delay
+        setTimeout(() => {
+          this.cardGrid[this.cardIndex1].isFlipped = false;
+          this.cardGrid[this.cardIndex2].isFlipped = false;
+        }, 5);
+      }
+    }else {
+      console.error("Error: Cannot access word property of undefined elements in cardGrid");
+    }
+  }
+
+  // calculatePointsPerMatch() {
+  //   return 100 / this.totalWords;
+  // }
+  
+  // deductPointsForIncorrectMatch() {
+  //   this.score -= this.calculatePointsPerMatch() / 2;
+  // }
   
   checkGameOver() {
     // Check if all cards are flipped (isFlipped = true) and handle game completion
+   if(this.currentCategory!==undefined){
+    for (let i =0 ;i<this.currentCategory.words.length;i++) {
+if(this.cardGrid[i].isFlipped===false){
+  console.log("not all cardes flipped");
+}else{
+console.log("all cardes flipped");
+this.routToSummery();//not working well
+      }
+    }
+  }
   }
 
   routToSummery() {
