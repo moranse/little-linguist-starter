@@ -43,7 +43,6 @@ export class MemoryGameComponent implements OnInit {
   textOfButton: string = '';
   anser = ['']; //dialog parameter
   goodAnswer = 0;
-  badAnswer = 0;
   summery: number[] = []; //array of the users anser and category id
   wordStatus: number[] = []; //array of the word status if user anser correct or not
   points = 0; //how many points for each good answer
