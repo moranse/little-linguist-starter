@@ -106,9 +106,8 @@ h1 {
   margin-bottom: 10px;
   margin-right: 40px;
 }
-mat-card-content:hover{
+mat-card-content:hover {
   cursor: pointer;
-
 }
 .custom-content {
   position: relative;
@@ -124,5 +123,5 @@ mat-card-content:hover{
   color: white;
   width: 170px;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.15);
-  justify-content:center;
-  }
+  justify-content: center;
+}
