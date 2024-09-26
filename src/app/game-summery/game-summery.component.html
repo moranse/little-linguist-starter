@@ -2,7 +2,7 @@
   <mat-spinner class="custom-spinner"></mat-spinner>
 </div>
 <div class="game" *ngIf="isFullyLoaded">
-  <h1>Mixed letters - {{ currentCategory?.name }} - Results</h1>
+  <h1>{{this.allGames[this.gameID-1].name}} - {{ currentCategory?.name }} - Results</h1>
   <p>Grade: {{ getGrade() }}</p>
   <p>
     You translated {{ goodAnswer }} out of {{ wordStatusArray.length }} words

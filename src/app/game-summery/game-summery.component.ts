@@ -1,3 +1,4 @@
+import { GamesService } from './../services/games.service';
 import { gameResultService } from './../services/gameResult.service';
 import { gameResult } from './../../shared/model/gameResult';
 import { Component, Input, OnInit } from '@angular/core';
@@ -11,6 +12,7 @@ import { MatInputModule } from '@angular/material/input';
 import { MatIconModule } from '@angular/material/icon';
 import { TranslatedWord } from '../../shared/model/translated-word';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { GameProfile } from '../../shared/model/gameProfile';
 
 @Component({
   selector: 'app-game-summery',
@@ -31,7 +33,7 @@ export class GameSummeryComponent implements OnInit {
   @Input() wordStatus?: string;
   summeryArray: number[] = [];
   wordStatusArray: number[] = [];
-  // id = '';
+allGames:GameProfile[]=[];
   goodAnswer = 0;
   badAnswer = 0;
   currentCategory?: Category;
@@ -42,17 +44,19 @@ export class GameSummeryComponent implements OnInit {
   gameID = -1;
 
   constructor(
+    private GamesService:GamesService,
     private categoriesService: CategoriesService,
     private gameResultService: gameResultService,
     private route: ActivatedRoute
   ) {}
 
   ngOnInit(): void {
+    this.allGames=this.GamesService.list();
     this.route.queryParams.subscribe((params) => {
       this.summeryArray = JSON.parse(decodeURIComponent(params['summery']));
       this.goodAnswer = this.summeryArray[0];
       this.badAnswer = this.summeryArray[1];
-      this.gameID = params['gameID'];
+      this.gameID = parseInt(params['gameID']);
       this.wordStatusArray = JSON.parse(
         decodeURIComponent(params['wordStatus'])
       );
@@ -78,6 +82,14 @@ export class GameSummeryComponent implements OnInit {
                 'for showing the category name to user, The category name is: ' +
                   this.currentCategory?.name
               );
+              if(this.gameID===4){
+                if(this.badAnswer===0){
+                  this.grade=100;
+                }
+                this.grade=this.summeryArray[2];
+              }else{
+                
+              
               this.points = Math.floor(
                 this.grade / this.randomWordArray.length
               ); //how many points for each good answer
@@ -87,6 +99,7 @@ export class GameSummeryComponent implements OnInit {
               } else {
                 this.grade = this.points * this.goodAnswer;
               }
+            }
               this.isFullyLoaded = true;
               const gameResult_ = new gameResult(
                 '',
